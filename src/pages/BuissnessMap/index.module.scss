@@ -1,0 +1,17 @@
+.form {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 30px;
+
+  :global(.ant-row) {
+    display: block;
+  }
+
+  :global(.ant-btn-primary) {
+    margin: 30px 0;
+  }
+
+  :global(.ant-space-align-baseline) {
+    align-items: center;
+  }
+}
