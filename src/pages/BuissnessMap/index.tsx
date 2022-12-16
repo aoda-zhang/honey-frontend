@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { MAX_AVE_SPEED, MAX_SPEED, MIN_AVE_SPEED, MIN_SPEED } from 'src/constants'
 import { HospatialType } from '../Hospital'
+import { storage } from 'src/utils/storage'
 export interface BMap {
   time: string
   from: string
@@ -22,12 +23,12 @@ const BusinessMap: React.FC = () => {
   const navigate = useNavigate()
   const [hospatial, setHospatial] = useState<any[]>([])
   useEffect(() => {
-    const hos: HospatialType[] = JSON.parse(localStorage.getItem('animalHospatial')) ?? []
+    const hos: HospatialType[] = storage.get('animalHospatial') ?? []
     const options = hos.map(item => ({ label: item.name, value: item.name }))
     setHospatial(() => [...options])
   }, [])
   const onFinish = (value: FormValue) => {
-    const BMapList = value.bMap.map(item => {
+    const BMapList = value?.bMap?.map(item => {
       const average = Math.floor(
         Math.random() * (MAX_AVE_SPEED - MIN_AVE_SPEED + 1) + MIN_AVE_SPEED
       )

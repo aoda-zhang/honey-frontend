@@ -3,17 +3,18 @@ import { Button, Form, Input, Space } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
+import { storage } from 'src/utils/storage'
 export type HospatialType = { name: string }
 
 const Hospital: React.FC = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const onFinish = async (values: { animalHospatial: HospatialType[] }) => {
-    await localStorage.setItem('animalHospatial', JSON.stringify(values.animalHospatial))
+    await storage.set('animalHospatial', values.animalHospatial)
     navigate('/businessMap')
   }
   useEffect(() => {
-    const hos: HospatialType[] = JSON.parse(localStorage.getItem('animalHospatial'))
+    const hos: HospatialType[] = storage.get('animalHospatial')
     if (hos) {
       form.setFieldValue('animalHospatial', hos)
     }
