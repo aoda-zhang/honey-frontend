@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Button, DatePicker, Form, Input, Select, Space } from 'antd'
+import React from 'react'
+import { Button, DatePicker, Form, Input, Space, message } from 'antd'
 import moment from 'moment'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { MAX_AVE_SPEED, MAX_SPEED, MIN_AVE_SPEED, MIN_SPEED } from 'src/constants'
-import { HospatialType } from '../Hospital'
-import { storage } from 'src/utils/storage'
+import { MAX_AVE_SPEED, MAX_SPEED, MIN_AVE_SPEED, MIN_SPEED, NO_DATA_MESSAGE } from 'src/constants'
+// import { HospatialType } from '../Hospital'
+// import { storage } from 'src/utils/storage'
 export interface BMap {
   time: string
   from: string
@@ -21,12 +21,12 @@ type FormValue = { bMap: BMap[] }
 const BusinessMap: React.FC = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const [hospatial, setHospatial] = useState<any[]>([])
-  useEffect(() => {
-    const hos: HospatialType[] = storage.get('animalHospatial') ?? []
-    const options = hos.map(item => ({ label: item.name, value: item.name }))
-    setHospatial(() => [...options])
-  }, [])
+  // const [hospatial, setHospatial] = useState<any[]>([])
+  // useEffect(() => {
+  //   const hos: HospatialType[] = storage.get('animalHospatial') ?? []
+  //   const options = hos.map(item => ({ label: item.name, value: item.name }))
+  //   setHospatial(() => [...options])
+  // }, [])
   const onFinish = (value: FormValue) => {
     const BMapList = value?.bMap?.map(item => {
       const average = Math.floor(
@@ -42,7 +42,11 @@ const BusinessMap: React.FC = () => {
         allMileage: Math.round(average * (item.spendTime / 60))
       }
     })
-    navigate('/previewMap', { state: BMapList })
+    if (BMapList?.length > 0) {
+      navigate('/previewMap', { state: BMapList })
+    } else {
+      message.error(NO_DATA_MESSAGE)
+    }
   }
   return (
     <div className={styles.form}>
@@ -79,15 +83,15 @@ const BusinessMap: React.FC = () => {
                     name={[name, 'to']}
                     rules={[{ required: true, message: '请输入到达地点' }]}
                   >
-                    <Select
+                    {/* <Select
                       allowClear
                       size="large"
                       showSearch
                       placeholder="请选择到达医院"
                       optionFilterProp="children"
                       options={hospatial}
-                    />
-                    {/* <Input placeholder="请填写到达医院" /> */}
+                    /> */}
+                    <Input placeholder="请填写到达医院" />
                   </Form.Item>
                   <Form.Item
                     {...restField}
@@ -109,19 +113,9 @@ const BusinessMap: React.FC = () => {
           )}
         </Form.List>
         <Form.Item>
-          <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                navigate('/hospital')
-              }}
-            >
-              编辑宠物医院
-            </Button>
-            <Button type="primary" htmlType="submit">
-              预览报销地图
-            </Button>
-          </Space>
+          <Button type="primary" htmlType="submit">
+            预览报销地图
+          </Button>
         </Form.Item>
       </Form>
     </div>

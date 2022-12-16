@@ -5,7 +5,7 @@ const Home = () => {
   const navigate = useNavigate()
   const route = useRef(navigate)
   useEffect(() => {
-    route.current('/hospital')
+    route.current('/businessMap')
   }, [])
   return (
     <div>
