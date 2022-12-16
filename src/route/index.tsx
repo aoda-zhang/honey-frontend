@@ -23,6 +23,10 @@ const routerList: RouteObject[] = [
         element: <PreviewMap />
       }
     ]
+  },
+  {
+    path: '*',
+    element: <Home />
   }
 ]
 
