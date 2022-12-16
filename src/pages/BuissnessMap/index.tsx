@@ -4,14 +4,14 @@ import moment from 'moment'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { MAX_AVE_SPEED, MAX_SPEED, MIN_AVE_SPEED, MIN_SPEED, NO_DATA_MESSAGE } from 'src/constants'
+import { NO_DATA_MESSAGE } from 'src/constants'
 // import { HospatialType } from '../Hospital'
 // import { storage } from 'src/utils/storage'
 export interface BMap {
   time: string
   from: string
   to: string
-  allMileage?: number
+  allMileage: number
   spendTime: number
   average?: number
   maxSpend?: number
@@ -29,19 +29,20 @@ const BusinessMap: React.FC = () => {
   // }, [])
   const onFinish = (value: FormValue) => {
     const BMapList = value?.bMap?.map(item => {
-      const average = Math.floor(
-        Math.random() * (MAX_AVE_SPEED - MIN_AVE_SPEED + 1) + MIN_AVE_SPEED
-      )
+      const average = Math.round(+item?.allMileage / (+item?.spendTime / 60))
+      const MAX_SPEED = average + 30
       return {
         time: moment(item.time).format('YYYY.MM.DD HH:mm'),
         from: item.from,
         to: item.to,
         spendTime: item.spendTime,
         average,
-        maxSpend: Math.floor(Math.random() * (MAX_SPEED - MIN_SPEED + 1) + MIN_SPEED),
-        allMileage: Math.round(average * (item.spendTime / 60))
+        maxSpend: Math.floor(Math.random() * (MAX_SPEED - average + 1) + average),
+        allMileage: item?.allMileage
       }
     })
+    console.log(BMapList)
+
     if (BMapList?.length > 0) {
       navigate('/previewMap', { state: BMapList })
     } else {
@@ -98,6 +99,14 @@ const BusinessMap: React.FC = () => {
                     label="驾驶时间"
                     name={[name, 'spendTime']}
                     rules={[{ required: true, message: '请输入驾驶分钟数' }]}
+                  >
+                    <Input type="number" placeholder="请填写驾驶分钟数" />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    label="总里程"
+                    name={[name, 'allMileage']}
+                    rules={[{ required: true, message: '请填写总里程数' }]}
                   >
                     <Input type="number" placeholder="请填写驾驶分钟数" />
                   </Form.Item>
