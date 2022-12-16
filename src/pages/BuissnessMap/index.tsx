@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, DatePicker, Form, Input, Space, message } from 'antd'
 import moment from 'moment'
+import 'moment/locale/zh-cn'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'

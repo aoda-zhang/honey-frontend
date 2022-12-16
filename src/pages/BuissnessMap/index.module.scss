@@ -12,6 +12,8 @@
   }
 
   :global(.ant-space-align-baseline) {
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
   }
 }
