@@ -5,3 +5,4 @@ node_modules/
 setupProxy.js
 .stylelintrc.js
 config/
+src/lib/*

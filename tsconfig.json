@@ -18,5 +18,6 @@
     "jsx": "react-jsx",
     "baseUrl": "./"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/lib/*"]
 }

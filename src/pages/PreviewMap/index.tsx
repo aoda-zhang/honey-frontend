@@ -3,19 +3,40 @@ import styles from './index.module.scss'
 import carIcon from '../../assets/images/car.png'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-
+import domtoimage from '../../lib/dom-to-image'
+import moment from 'moment'
+import { Button } from 'antd'
 const PreviewMap = () => {
   const location = useLocation()
   const [list, setList] = useState<BMap[]>([])
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    setList(() => [...(location.state ? location.state : [])])
+    const state: BMap[] = location.state
+    const sortData =
+      state.sort((c, b) => +moment(b.time).valueOf() - +moment(c.time).valueOf()) ?? []
+    setList(() => [...sortData])
   }, [location.state])
+  const getJPEGIMG = () => {
+    const node = document.getElementById('ZYR')
+    domtoimage
+      ?.toJpeg(node, {
+        scale: 4,
+        quality: 0.95,
+        width: node?.clientWidth ?? 0,
+        height: node?.clientHeight ?? 0
+      })
+      .then(url => {
+        const link = document.createElement('a')
+        link.download = `${moment().format('LLLL')}.jpeg`
+        link.href = url
+        link.click()
+      })
+  }
 
   return (
     <div className={styles.previewMap}>
-      <div className={styles.content}>
+      <div className={styles.content} id="ZYR">
         {list.map((item, index) => (
           <div className={styles.item} key={index}>
             <div className={styles.time}>
@@ -65,6 +86,15 @@ const PreviewMap = () => {
           </div>
         ))}
       </div>
+      <Button
+        className={styles.save}
+        type="primary"
+        onClick={() => {
+          getJPEGIMG()
+        }}
+      >
+        保存本次报销
+      </Button>
     </div>
   )
 }

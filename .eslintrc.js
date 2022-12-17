@@ -26,7 +26,6 @@ module.exports = {
     },
     project: ['./tsconfig.json']
   },
-
   rules: {
     'no-var': 'error',
     '@typescript-eslint/no-explicit-any': 'off',

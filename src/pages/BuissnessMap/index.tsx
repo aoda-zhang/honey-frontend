@@ -39,6 +39,8 @@ const BusinessMap: React.FC = () => {
     if (BMapList?.length > 0) {
       navigate('/previewMap', { state: BMapList })
     } else {
+      console.log(moment('2022.12.09 00:04').valueOf())
+
       message.error(NO_DATA_MESSAGE)
     }
   }
