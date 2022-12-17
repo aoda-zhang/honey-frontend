@@ -3,7 +3,6 @@ import styles from './index.module.scss'
 import carIcon from '../../assets/images/car.png'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import translateTime from 'src/utils/translateTime'
 
 const PreviewMap = () => {
   const location = useLocation()
