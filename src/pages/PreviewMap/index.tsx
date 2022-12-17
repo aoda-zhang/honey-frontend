@@ -45,7 +45,7 @@ const PreviewMap = () => {
                 <span>导航里程</span>
               </span>
               <span className={styles.column}>
-                <span className={styles.value}>{translateTime(item?.spendTime)}</span>
+                <span className={styles.value}>{item?.spendTime}</span>
                 <span>驾驶时长</span>
               </span>
               <span className={styles.column}>
