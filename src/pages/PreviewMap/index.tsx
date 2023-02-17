@@ -17,7 +17,7 @@ const PreviewMap = () => {
       state.sort((c, b) => +moment(b.time).valueOf() - +moment(c.time).valueOf()) ?? []
     setList(() => [...sortData])
   }, [location.state])
-  const getJPEGIMG = () => {
+  const getIMG = () => {
     const node = document.getElementById('ZYR')
     domtoimage
       ?.toJpeg(node, {
@@ -43,7 +43,7 @@ const PreviewMap = () => {
               <span>
                 <img className={styles.carIcon} src={carIcon}></img>
               </span>
-              <span>{item?.time}</span>
+              <span className={styles.text}>{item?.time}</span>
             </div>
             <div className={styles.address}>
               <span className={styles.icon}>
@@ -90,7 +90,7 @@ const PreviewMap = () => {
         className={styles.save}
         type="primary"
         onClick={() => {
-          getJPEGIMG()
+          getIMG()
         }}
       >
         保存本次报销
