@@ -11,6 +11,11 @@
     margin: 30px 0;
   }
 
+  :global(.ant-select-selector) {
+    width: 48vw;
+    height: 32px;
+  }
+
   :global(.ant-space-align-baseline) {
     flex-wrap: wrap;
     align-items: center;

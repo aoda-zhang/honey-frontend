@@ -1,19 +1,28 @@
 import React from 'react'
-import { Button, DatePicker, Form, Input, Space, message, TimePicker } from 'antd'
-import moment from 'moment'
+import { Button, Form, Input, Select, Space, message } from 'antd'
 import 'moment/locale/zh-cn'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { NO_DATA_MESSAGE } from 'src/constants'
+import { MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE, AVE_OIL } from 'src/constants'
+import HOSPITAL from '../../constants/hospital'
 export interface BMap {
+  // 出发时间
   time: string
+  // 出发地点
   from: string
+  // 到达地点
   to: string
+  // 总里程
   allMileage: number
+  // 花费时间
   spendTime: number
+  // 平均速度
   average?: number
+  // 最大速度
   maxSpend?: number
+  // 预估油费
+  expectedOil: number
 }
 type FormValue = { bMap: BMap[] }
 
@@ -22,25 +31,22 @@ const BusinessMap: React.FC = () => {
   const navigate = useNavigate()
   const onFinish = (value: FormValue) => {
     const BMapList = value?.bMap?.map(item => {
-      const spendHour =
-        moment(item?.spendTime).get('hours') + moment(item?.spendTime).get('minutes') / 60
-      const average = Math.round(+item?.allMileage / spendHour)
+      const average = Math.floor(Math.random() * MAX_AVE_SPEED + MIN_AVE_SPEED)
       const MAX_SPEED = average + 30
       return {
-        time: moment(item.time).format('YYYY.MM.DD HH:mm'),
+        time: item?.time,
         from: item.from,
         to: item.to,
-        spendTime: moment(item.spendTime).format('HH:mm'),
+        spendTime: item.spendTime,
         average,
         maxSpend: Math.floor(Math.random() * (MAX_SPEED - average + 1) + average),
-        allMileage: item?.allMileage
+        allMileage: item?.allMileage,
+        expectedOil: (item?.allMileage * AVE_OIL)?.toFixed(2)
       }
     })
     if (BMapList?.length > 0) {
       navigate('/previewMap', { state: BMapList })
     } else {
-      console.log(moment('2022.12.09 00:04').valueOf())
-
       message.error(NO_DATA_MESSAGE)
     }
   }
@@ -58,11 +64,7 @@ const BusinessMap: React.FC = () => {
                     name={[name, 'time']}
                     rules={[{ required: true, message: '请输入出发时间' }]}
                   >
-                    <DatePicker
-                      placeholder="请选择出发时间"
-                      format="YYYY-MM-DD HH:mm"
-                      showTime={{ defaultValue: moment('00:00', 'HH:mm') }}
-                    />
+                    <Input placeholder="示例 2023.06.25 16:24" />
                   </Form.Item>
 
                   <Form.Item
@@ -71,7 +73,18 @@ const BusinessMap: React.FC = () => {
                     name={[name, 'from']}
                     rules={[{ required: true, message: '请输入出发地点' }]}
                   >
-                    <Input placeholder="请填写出发地点" />
+                    <Select
+                      showSearch
+                      allowClear
+                      filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                      }
+                      size="large"
+                      mode="tags"
+                      placeholder="请选择出发医院"
+                      optionFilterProp="children"
+                      options={HOSPITAL}
+                    />
                   </Form.Item>
                   <Form.Item
                     {...restField}
@@ -79,16 +92,18 @@ const BusinessMap: React.FC = () => {
                     name={[name, 'to']}
                     rules={[{ required: true, message: '请输入到达地点' }]}
                   >
-                    {/* <Select
-                      allowClear
-                      size="large"
+                    <Select
                       showSearch
+                      allowClear
+                      filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                      }
+                      size="large"
                       mode="tags"
                       placeholder="请选择到达医院"
                       optionFilterProp="children"
-                      // options={hospatial}
-                    /> */}
-                    <Input placeholder="请填写到达医院" />
+                      options={HOSPITAL}
+                    />
                   </Form.Item>
                   <Form.Item
                     {...restField}
@@ -96,8 +111,7 @@ const BusinessMap: React.FC = () => {
                     name={[name, 'spendTime']}
                     rules={[{ required: true, message: '请选择驾驶时间' }]}
                   >
-                    <TimePicker format="HH:mm"></TimePicker>
-                    {/* <Input type="number" placeholder="请填写驾驶分钟数" /> */}
+                    <Input placeholder="示例 00:18" />
                   </Form.Item>
                   <Form.Item
                     {...restField}

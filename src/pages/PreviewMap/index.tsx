@@ -82,6 +82,13 @@ const PreviewMap = () => {
                 </span>
                 <span>最快速度</span>
               </span>
+              <span className={styles.column}>
+                <span>
+                  <span className={styles.value}>{item?.expectedOil}</span>
+                  <span>元</span>
+                </span>
+                <span>预估油费</span>
+              </span>
             </div>
           </div>
         ))}
