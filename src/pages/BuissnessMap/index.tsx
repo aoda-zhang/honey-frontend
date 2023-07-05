@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, Select, Space, message } from 'antd'
-import 'moment/locale/zh-cn'
+import 'dayjs/locale/zh-cn'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE, AVE_OIL } from 'src/constants'
 import HOSPITAL from '../../constants/hospital'
+import { AVE_OIL, MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE } from '../../constants'
+import addressAPI, { Address } from './API'
 export interface BMap {
   // 出发时间
   time: string
@@ -25,9 +26,16 @@ export interface BMap {
   expectedOil: number
 }
 type FormValue = { bMap: BMap[] }
-
 const BusinessMap: React.FC = () => {
   const [form] = Form.useForm()
+  const [address, setAddress] = useState<Address[]>([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await addressAPI.getAddressList()
+      setAddress(data)
+    }
+    fetchData()
+  }, [])
   const navigate = useNavigate()
   const onFinish = (value: FormValue) => {
     const BMapList = value?.bMap?.map(item => {

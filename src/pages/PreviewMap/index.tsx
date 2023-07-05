@@ -1,10 +1,11 @@
+import React from 'react'
 import { BMap } from '../BuissnessMap'
 import styles from './index.module.scss'
 import carIcon from '../../assets/images/car.png'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import domtoimage from '../../lib/dom-to-image'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Button } from 'antd'
 const PreviewMap = () => {
   const location = useLocation()
@@ -13,8 +14,7 @@ const PreviewMap = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const state: BMap[] = location.state
-    const sortData =
-      state.sort((c, b) => +moment(b.time).valueOf() - +moment(c.time).valueOf()) ?? []
+    const sortData = state.sort((c, b) => +dayjs(b.time).valueOf() - +dayjs(c.time).valueOf()) ?? []
     setList(() => [...sortData])
   }, [location.state])
   const getJPEGIMG = () => {
@@ -28,7 +28,7 @@ const PreviewMap = () => {
       })
       .then(url => {
         const link = document.createElement('a')
-        link.download = `${moment().format('LLLL')}.jpeg`
+        link.download = `${dayjs().format('LLLL')}.jpeg`
         link.href = url
         link.click()
       })

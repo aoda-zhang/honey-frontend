@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
-import zhCN from 'antd/es/locale/zh_CN'
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <ConfigProvider locale={zhCN}>
+      <ConfigProvider>
         <App />
       </ConfigProvider>
     </Router>
