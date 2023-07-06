@@ -8,7 +8,7 @@
     gap: 20px;
     box-sizing: border-box;
     padding: 10px;
-    background-color: $gray1;
+    background-color: $gray8;
 
     .item {
       display: flex;
@@ -16,7 +16,7 @@
       box-sizing: border-box;
       padding: 10px;
       color: white;
-      background-color: $gray2;
+      background-color: $gray7;
       border-radius: 20px;
 
       .time {
@@ -87,7 +87,7 @@
       .spendTime {
         display: flex;
         justify-content: space-between;
-        color: #8d98a6;
+        color: $gray6;
 
         .column {
           @include column;
@@ -95,7 +95,7 @@
 
         .value {
           margin-right: 3px;
-          color: white;
+          color: $gray1;
           font-size: 16px;
         }
       }

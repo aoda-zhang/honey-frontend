@@ -37,7 +37,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "dev": "cross-env  NODE_ENV=development react-app-rewired start ",
+    "dev": "cross-env  NODE_ENV=development react-app-rewired --openssl-legacy-provider start ",
     "build": "cross-env  NODE_ENV=production react-app-rewired build",
     "lint": "lint-staged"
   },
