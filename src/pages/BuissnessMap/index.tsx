@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Form, Input, Select, Space, message } from 'antd'
 import 'dayjs/locale/zh-cn'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import HOSPITAL from '../../constants/hospital'
 import { AVE_OIL, MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE } from '../../constants'
-import addressAPI, { Address } from './API'
+import addressAPI from './api'
+import addressStore from './store'
+import { observer } from 'mobx-react'
 export interface BMap {
   // 出发时间
   time: string
@@ -25,14 +26,23 @@ export interface BMap {
   // 预估油费
   expectedOil: number
 }
+type AddressOption = {
+  label: string
+  value: string
+}
 type FormValue = { bMap: BMap[] }
-const BusinessMap: React.FC = () => {
+const BusinessMap: React.FC = observer(() => {
+  const { addressData, setAddressData } = addressStore
   const [form] = Form.useForm()
-  const [address, setAddress] = useState<Address[]>([])
+  const [address, setAddress] = useState<AddressOption[]>([])
   useEffect(() => {
     const fetchData = async () => {
       const data = await addressAPI.getAddressList()
-      setAddress(data)
+      const addressList = data?.map(item => ({
+        label: item?.name,
+        value: item?.name
+      }))
+      setAddress(addressList)
     }
     fetchData()
   }, [])
@@ -85,13 +95,13 @@ const BusinessMap: React.FC = () => {
                       showSearch
                       allowClear
                       filterOption={(input, option) =>
-                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        (option?.label ?? '')?.toLowerCase().includes(input.toLowerCase())
                       }
                       size="large"
                       mode="tags"
                       placeholder="请选择出发医院"
                       optionFilterProp="children"
-                      options={HOSPITAL}
+                      options={address}
                     />
                   </Form.Item>
                   <Form.Item
@@ -110,7 +120,7 @@ const BusinessMap: React.FC = () => {
                       mode="tags"
                       placeholder="请选择到达医院"
                       optionFilterProp="children"
-                      options={HOSPITAL}
+                      options={address}
                     />
                   </Form.Item>
                   <Form.Item
@@ -148,6 +158,6 @@ const BusinessMap: React.FC = () => {
       </Form>
     </div>
   )
-}
+})
 
 export default BusinessMap
