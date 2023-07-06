@@ -1,30 +1,24 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: ['./tsconfig.json']
+  },
   extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:import/recommended',
     'plugin:react/recommended',
-    'airbnb-typescript',
+    'plugin:react-hooks/recommended',
     'prettier'
   ],
-  plugins: ['react', '@typescript-eslint', 'react-hooks'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
   env: {
     browser: true,
     node: true
   },
   settings: {
     react: {
-      pragma: 'React',
       version: 'detect'
     }
-  },
-  parserOptions: {
-    ecmaVersion: 2019,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    },
-    project: ['./tsconfig.json']
   },
   rules: {
     'no-var': 'error',
@@ -37,15 +31,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn'],
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never'
-      }
-    ]
+    '@typescript-eslint/ban-ts-comment': 'warn'
   }
 }

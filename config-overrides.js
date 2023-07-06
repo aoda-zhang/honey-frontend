@@ -1,30 +1,20 @@
 /**
  * webpack打包相关在此配置
  */
-const {
-  override,
-  addWebpackAlias,
-  adjustStyleLoaders,
-  addWebpackPlugin,
-  fixBabelImports
-} = require('customize-cra')
+const { override, addWebpackAlias, adjustStyleLoaders, addWebpackPlugin } = require('customize-cra')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const resolve = dir => path.join(__dirname, '.', dir)
 const rewireReactHotLoader = require('react-app-rewire-hot-loader')
 const isPrd = process.env.NODE_ENV === 'production'
 module.exports = override(
-  // antd 按需加载
-  fixBabelImports('import', {
-    libraryName: 'antd',
-    libraryDirectory: 'es',
-    style: 'css'
-  }),
   // 路径别名设置
   addWebpackAlias({
-    '@': resolve(__dirname, './src'),
-    '@apis': resolve(__dirname, './src/apis'),
-    '@components': resolve(__dirname, './src/components')
+    '@components/*': resolve(__dirname, './src/components/*'),
+    '@assets/*': resolve(__dirname, './src/assets/*'),
+    '@constants/*': resolve(__dirname, './src/constants/*'),
+    '@http': resolve(__dirname, './src/lib/http/index.ts'),
+    '@utils/*': resolve(__dirname, './src/utils/*')
   }),
   // scss全局样式动态挂载
   adjustStyleLoaders(rule => {
