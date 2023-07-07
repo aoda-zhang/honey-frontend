@@ -1,18 +1,16 @@
 import React from 'react'
-import { BMap } from '../BuissnessMap'
 import styles from './index.module.scss'
 import carIcon from '../../assets/images/car.png'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import domtoimage from '../../lib/dom-to-image'
+import domtoimage from '../../shared/lib/dom-to-image'
 import dayjs from 'dayjs'
 import { Button } from 'antd'
+import { BMap } from '../BuissnessMap/types'
 const PreviewMap = () => {
   const location = useLocation()
   const [list, setList] = useState<BMap[]>([])
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
     const state: BMap[] = location.state
     const sortData = state.sort((c, b) => +dayjs(b.time).valueOf() - +dayjs(c.time).valueOf()) ?? []
     setList(() => [...sortData])

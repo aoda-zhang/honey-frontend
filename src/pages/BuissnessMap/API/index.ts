@@ -1,9 +1,9 @@
-import httpService from '../../../lib/http'
+import httpService from '@/shared/lib/http'
+
 export type Address = {
   id: string
   name: string
 }
-
 class AddressAPI {
   getAddressList = () => {
     return httpService.getAPI<Address[]>('/api/address/list')

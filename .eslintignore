@@ -1,9 +1,8 @@
-config-overrides.js
 script/
 node_modules/
-\.eslintrc.js
+.eslintrc.json
 setupProxy.js
 .stylelintrc.js
 config/
 src/lib/*
-src/typings/*
+craco.config.js

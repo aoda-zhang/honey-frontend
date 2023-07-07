@@ -1,38 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, Select, Space, message } from 'antd'
 import 'dayjs/locale/zh-cn'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { AVE_OIL, MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE } from '../../constants'
 import addressAPI from './api'
-import addressStore from './store'
 import { observer } from 'mobx-react'
-export interface BMap {
-  // 出发时间
-  time: string
-  // 出发地点
-  from: string
-  // 到达地点
-  to: string
-  // 总里程
-  allMileage: number
-  // 花费时间
-  spendTime: number
-  // 平均速度
-  average?: number
-  // 最大速度
-  maxSpend?: number
-  // 预估油费
-  expectedOil: number
-}
-type AddressOption = {
-  label: string
-  value: string
-}
-type FormValue = { bMap: BMap[] }
+import { AddressOption, FormValue } from './types'
+import { AVE_OIL, MAX_AVE_SPEED, MIN_AVE_SPEED, NO_DATA_MESSAGE } from '@/shared/constants'
 const BusinessMap: React.FC = observer(() => {
-  const { addressData, setAddressData } = addressStore
   const [form] = Form.useForm()
   const [address, setAddress] = useState<AddressOption[]>([])
   useEffect(() => {
