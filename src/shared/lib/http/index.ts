@@ -1,10 +1,10 @@
+import envConfig from '@/config/env'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-
 // 基础请求配置
 const Http = axios.create({
   timeout: 20000,
   // 根据不同环境，切换请求baseUrl
-  baseURL: 'https://zyr.onrender.com'
+  baseURL: envConfig.baseURL
 })
 
 // 自定义请求头
@@ -18,7 +18,9 @@ const interceptorsReq = (config: AxiosRequestConfig) => {
   return config
 }
 
-const errorHandler = error => {}
+const errorHandler = error => {
+  console.log(error)
+}
 
 // 错误请求拦截处理
 Http.interceptors.request.use(interceptorsReq, err => {
