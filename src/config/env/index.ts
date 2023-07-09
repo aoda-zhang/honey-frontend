@@ -13,6 +13,7 @@ interface envType {
   colorPrimary: string
   authCode: string
   noAuthMessage: string
+  backendBaseURL: string
 }
 const envConfig: envType = require(`./${currentEnv}`)
 export default envConfig
