@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './index.module.scss'
 import carIcon from '../../assets/images/car.png'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import domtoimage from '../../shared/lib/dom-to-image'
+import domtoimage from '../../shared/libs/dom-to-image'
 import dayjs from 'dayjs'
 import { Button } from 'antd'
 import { BMap } from '../BuissnessMap/types'
-const PreviewMap = () => {
+const PreviewMap: FC = () => {
   const location = useLocation()
   const [list, setList] = useState<BMap[]>([])
   useEffect(() => {

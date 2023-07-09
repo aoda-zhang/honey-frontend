@@ -1,4 +1,4 @@
-import httpService from '@/shared/lib/http'
+import httpService from '@/shared/libs/http'
 
 export type Address = {
   id: string
