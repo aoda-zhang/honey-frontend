@@ -6,9 +6,9 @@ module.exports = {
       plugin: sassResourcesLoader,
       options: {
         resources: [
-          './src/shared/style/theme.scss',
-          './src/shared/style/variable.scss',
-          './src/shared/style/common.scss'
+          './src/shared/styles/theme.scss',
+          './src/shared/styles/variable.scss',
+          './src/shared/styles/common.scss'
         ]
       }
     }
