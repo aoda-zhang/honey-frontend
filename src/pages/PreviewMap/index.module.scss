@@ -1,31 +1,30 @@
 .previewMap {
   box-sizing: border-box;
-  padding: 10px;
-
+  padding: 0.71rem;
   .content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.43rem;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 0.71rem;
     background-color: $gray8;
 
     .item {
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      padding: 10px;
+      padding: 0.57rem 0.86rem;
       color: white;
       background-color: $gray7;
-      border-radius: 20px;
+      border-radius: 1.43rem;
 
       .time {
         display: flex;
-        grid-gap: 10px;
-        gap: 10px;
+        grid-gap: 0.71rem;
+        gap: 0.71rem;
         align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 8px;
+        margin-bottom: 1.43rem;
+        padding-bottom: 0.57rem;
         border-bottom: 1px solid #374361;
 
         .text {
@@ -33,10 +32,13 @@
         }
 
         .carIcon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           box-sizing: border-box;
-          width: 30px;
-          height: 30px;
-          padding: 3px;
+          width: 1.85rem;
+          height: 1.85rem;
+          padding: 0.21rem;
           background-color: #275bfa;
           border-radius: 50%;
         }
@@ -44,9 +46,8 @@
 
       .address {
         display: flex;
-        gap: 10px;
-        margin-bottom: 32px;
-
+        gap: 0.71rem;
+        margin-bottom: 2.29rem;
         .icon {
           display: flex;
           flex-direction: column;
@@ -56,23 +57,23 @@
 
         .redC {
           display: inline-block;
-          width: 14px;
-          height: 14px;
-          background-color: #4da939;
+          width: 0.77rem;
+          height: 0.77rem;
+          background-color: $green7;
           border-radius: 50%;
         }
 
         .borderC {
           display: inline-block;
           width: 2px;
-          height: 19px;
+          height: 1.43rem;
           background: #2f86d9;
         }
 
         .greenC {
           display: inline-block;
-          width: 14px;
-          height: 14px;
+          width: 0.77rem;
+          height: 0.77rem;
           background-color: #e12834;
           border-radius: 50%;
         }
@@ -80,7 +81,7 @@
         .name {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 1rem;
         }
       }
 
@@ -88,21 +89,25 @@
         display: flex;
         justify-content: space-between;
         color: $gray6;
-
         .column {
           @include column;
-        }
-
-        .value {
-          margin-right: 3px;
-          color: $gray1;
-          font-size: 16px;
+          gap: 0.71rem;
+          .value {
+            margin-right: 0.214rem;
+            color: $gray1;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+          .unit {
+            display: inline-block;
+            transform: scale(0.9);
+          }
         }
       }
     }
   }
 
   .save {
-    margin: 30px 0;
+    margin: 2.143rem 0;
   }
 }
