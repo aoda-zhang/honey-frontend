@@ -58,7 +58,7 @@ const PreviewMap: FC = () => {
               <span className={styles.column}>
                 <span>
                   <span className={styles.value}>{item?.allMileage}</span>
-                  <span>km</span>
+                  <span className={styles.unit}>km</span>
                 </span>
                 <span>导航里程</span>
               </span>
@@ -69,21 +69,21 @@ const PreviewMap: FC = () => {
               <span className={styles.column}>
                 <span>
                   <span className={styles.value}>{item?.average}</span>
-                  <span>km/h</span>
+                  <span className={styles.unit}>km/h</span>
                 </span>
                 <span>平均速度</span>
               </span>
               <span className={styles.column}>
                 <span>
                   <span className={styles.value}>{item?.maxSpend}</span>
-                  <span>km/h</span>
+                  <span className={styles.unit}>km/h</span>
                 </span>
                 <span>最快速度</span>
               </span>
               <span className={styles.column}>
                 <span>
                   <span className={styles.value}>{item?.expectedOil}</span>
-                  <span>元</span>
+                  <span className={styles.unit}>元</span>
                 </span>
                 <span>预估油费</span>
               </span>
