@@ -4,5 +4,5 @@ node_modules/
 setupProxy.js
 .stylelintrc.js
 config/
-src/shared/lib/*
+src/route/*
 craco.config.js

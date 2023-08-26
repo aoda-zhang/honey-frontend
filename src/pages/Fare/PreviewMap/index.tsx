@@ -1,41 +1,14 @@
 import React, { FC } from 'react'
 import styles from './index.module.scss'
-import carIcon from '../../assets/images/car.png'
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import domtoimage from '../../shared/libs/dom-to-image'
-import dayjs from 'dayjs'
-import { Button } from 'antd'
-import { BMap } from '../BuissnessMap/types'
+import carIcon from '@/assets/images/car.png'
+import { observer } from 'mobx-react-lite'
+import fareStore from '../store'
 const PreviewMap: FC = () => {
-  const location = useLocation()
-  const [list, setList] = useState<BMap[]>([])
-  useEffect(() => {
-    const state: BMap[] = location.state
-    const sortData = state.sort((c, b) => +dayjs(b.time).valueOf() - +dayjs(c.time).valueOf()) ?? []
-    setList(() => [...sortData])
-  }, [location.state])
-  const getIMG = () => {
-    const node = document.getElementById('ZYR')
-    domtoimage
-      ?.toJpeg(node, {
-        scale: 4,
-        quality: 0.95,
-        width: node?.clientWidth ?? 0,
-        height: node?.clientHeight ?? 0
-      })
-      .then(url => {
-        const link = document.createElement('a')
-        link.download = `${dayjs().format('LLLL')}.jpeg`
-        link.href = url
-        link.click()
-      })
-  }
-
+  const { formData } = fareStore
   return (
     <div className={styles.previewMap}>
       <div className={styles.content} id="ZYR">
-        {list.map((item, index) => (
+        {formData?.map((item, index) => (
           <div className={styles.item} key={index}>
             <div className={styles.time}>
               <span>
@@ -91,17 +64,8 @@ const PreviewMap: FC = () => {
           </div>
         ))}
       </div>
-      <Button
-        className={styles.save}
-        type="primary"
-        onClick={() => {
-          getIMG()
-        }}
-      >
-        保存本次报销
-      </Button>
     </div>
   )
 }
 
-export default PreviewMap
+export default observer(PreviewMap)

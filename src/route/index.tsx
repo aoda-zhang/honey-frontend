@@ -1,8 +1,7 @@
-import Welcome from '@/pages/Welcome'
 import React from 'react'
+import Welcome from '@/pages/Welcome'
 import { RouteObject } from 'react-router-dom'
-import BusinessMap from 'src/pages/BuissnessMap'
-import PreviewMap from 'src/pages/PreviewMap'
+import Fare from '@/pages/Fare'
 
 const routerList: RouteObject[] = [
   {
@@ -14,12 +13,8 @@ const routerList: RouteObject[] = [
     element: <Welcome />
   },
   {
-    path: '/businessMap',
-    element: <BusinessMap />
-  },
-  {
-    path: '/previewMap',
-    element: <PreviewMap />
+    path: '/fare',
+    element: <Fare />
   },
   {
     path: '*',
