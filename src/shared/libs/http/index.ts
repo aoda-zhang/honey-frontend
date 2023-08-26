@@ -1,20 +1,18 @@
 import envConfig from '@/config/env'
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { message } from 'antd'
-// 基础请求配置
+import message from 'antd/es/message'
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios'
 const Http = axios.create({
   timeout: 20000,
-  // 根据不同环境，切换请求baseUrl
-  baseURL: envConfig?.baseURL
+  baseURL: envConfig.baseURL
 })
-
 // 自定义请求头
 const customHeaders = {
   Accept: 'application/json'
 }
 
-// 请求config处理
-const interceptorsReq = (config: AxiosRequestConfig) => {
+// 成功请求config处理
+const interceptorsReq = (config: AxiosRequestHeaders) => {
+  // @ts-ignore
   config.headers = { ...config.headers, ...customHeaders }
   return config
 }
@@ -23,9 +21,10 @@ const errorHandler = error => {
   message.error(`${error}${envConfig?.commonErrorMessage}`)
 }
 
-// 错误请求拦截处理
+// 请求拦截处理
+// @ts-ignore
 Http.interceptors.request.use(interceptorsReq, err => {
-  errorHandler(err?.message)
+  errorHandler(err)
   return Promise.reject(err?.message)
 })
 
@@ -39,31 +38,43 @@ const interceptorsResSuccess = <T>(response: AxiosResponse<T>) => {
     return Promise.reject()
   }
 }
-
-// 错误响应拦截处理
+// 响应拦截处理
 Http.interceptors.response.use(interceptorsResSuccess, error => {
   errorHandler(error?.message)
   return Promise.reject(error)
 })
-
-// 基础API
 const httpService = {
-  async getAPI<T>(url: string, params?: Record<string, any>): Promise<T> {
+  async getAPI<T extends unknown>(
+    url: string,
+    params?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<T | any> {
     // @ts-ignore
-    return Http.get<T>(url, { params })
+    return Http.get<T>(url, { params, ...config })
   },
-  postAPI<T>(url: string, data?: Record<string, any>): Promise<T> {
+  deleteAPI<T extends unknown>(
+    url: string,
+    params?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
     // @ts-ignore
-    return Http.post<T>(url, { data })
+    return Http.delete<T>(url, { params, ...config })
   },
-  putAPI<T>(url: string, data?: Record<string, any>): Promise<T> {
+  postAPI<T extends unknown>(
+    url: string,
+    data?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<T | any> {
     // @ts-ignore
-    return Http.put<T>(url, { data })
+    return Http.post<T>(url, data, { ...config })
   },
-  deleteAPI<T>(url: string, params?: Record<string, any>): Promise<T> {
+  putAPI<T extends unknown>(
+    url: string,
+    data?: Record<string, any>,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
     // @ts-ignore
-    return Http.delete<T>(url, { params })
+    return Http.put<T>(url, data, { ...config })
   }
 }
-
 export default httpService

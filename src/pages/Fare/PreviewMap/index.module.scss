@@ -1,12 +1,13 @@
 .previewMap {
   box-sizing: border-box;
   padding: 0.71rem;
+  background-color: $gray8;
   .content {
     display: flex;
     flex-direction: column;
     gap: 1.43rem;
     box-sizing: border-box;
-    padding: 0.71rem;
+    padding: 0.59rem;
     background-color: $gray8;
 
     .item {
@@ -92,6 +93,7 @@
         .column {
           @include column;
           gap: 0.71rem;
+          font-size: 0.8rem;
           .value {
             margin-right: 0.214rem;
             color: $gray1;
