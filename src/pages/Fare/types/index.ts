@@ -24,4 +24,5 @@ export type AddressOption = {
   label: string
   value: string
 }
-export type FormValue = { bMap: BMap[] }
+export type FormValue = { spendDate: string; bMap: BMap[] }
+export type FormDataType = { bMap: BMap[] }

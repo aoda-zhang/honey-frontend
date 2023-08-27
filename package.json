@@ -26,6 +26,7 @@
     "husky": "^4.0.0",
     "install": "^0.13.0",
     "lint-staged": "^12.3.8",
+    "lodash": "^4.17.21",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "normalize.css": "^8.0.1",

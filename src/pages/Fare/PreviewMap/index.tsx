@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styles from './index.module.scss'
-import carIcon from '@/assets/images/car.png'
+import carIcon from '@/shared/assets/images/car.png'
 import { observer } from 'mobx-react-lite'
 import fareStore from '../store'
 const PreviewMap: FC = () => {

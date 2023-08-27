@@ -21,7 +21,7 @@ const BusinessMap: React.FC = () => {
                   name={[name, 'time']}
                   rules={[{ required: true, message: '请输入出发时间' }]}
                 >
-                  <Input placeholder="示例 2023.06.25 16:24" />
+                  <Input placeholder="示例 16:24" />
                 </Form.Item>
 
                 <Form.Item

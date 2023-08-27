@@ -3,11 +3,13 @@
     "prefix": "rff",
     "body": [
       "import React, { FC } from 'react'",
-      "const Index: FC = () => {",
+      "type Props = {",
+      "  name: string",
+      "}",
+      "const Index: FC<Props> = props => {",
       "  return <div></div>",
       "}",
-      "export default Index",
-      ""
+      "export default Index"
     ],
     "description": "rff"
   }
