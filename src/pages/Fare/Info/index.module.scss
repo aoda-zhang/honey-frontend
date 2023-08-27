@@ -1,0 +1,14 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  .title {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .values {
+    word-wrap: break-word;
+    .val {
+      padding: 0.31rem;
+    }
+  }
+}

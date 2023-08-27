@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useState } from 'react'
-import welcomeIMG from '@/assets/images/welcome.png'
+import welcomeIMG from '@/shared/assets/images/welcome.png'
 import styles from './index.module.scss'
 import envConfig from '@/config/env'
 import { Input, Spin, message } from 'antd'
@@ -41,10 +41,7 @@ const Welcome: FC = () => {
         content: envConfig?.auth?.noAuthMessage
       })
     }
-  }, [messageApi, navigate])
-  // 鉴权
-  // 获取数据
-  // 存放到全局状态中
+  }, [messageApi, navigate, setAddress])
   const onPressEnter = e => {
     const authCode = e?.target?.value
     const secretCode = sha256(authCode)?.toString()
