@@ -44,7 +44,9 @@ const Welcome: FC = () => {
   }, [messageApi, navigate, setAddress])
   const onPressEnter = e => {
     const authCode = e?.target?.value
-    const secretCode = sha256(authCode)?.toString()
+    const secretCode = sha256(
+      `${sha256(authCode)?.toString()}${envConfig?.auth?.secritySaltCode}`
+    )?.toString()
     if (secretCode === envConfig?.auth?.authCode) {
       storage.set('authKey', authCode)
       navigate('/fare')

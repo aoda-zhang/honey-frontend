@@ -8,6 +8,7 @@ interface envType {
     inputAuthCode: string
     authCode: string
     noAuthMessage: string
+    secritySaltCode: string
   }
   inputAuthCode: string
   colorPrimary: string
