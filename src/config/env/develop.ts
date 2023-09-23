@@ -5,9 +5,9 @@ module.exports = {
   auth: {
     inputAuthCode: 'Please enter the authorization code',
     authCode: process.env.REACT_APP_AUTHCODE,
-    noAuthMessage: '个人网站，请勿滥用，输入正确的授权码可进入'
+    noAuthMessage: '个人网站，请勿滥用，输入正确的授权码可进入',
+    secritySaltCode: process.env.REACT_APP_SECRITYSALTCODE
   },
   colorPrimary: '#1c7d29',
-  backendBaseURL: process.env.REACT_APP_backendBaseURL,
-  secritySaltCode: process.env.REACT_APP_SECRITYSALTCODE
+  backendBaseURL: process.env.REACT_APP_backendBaseURL
 }
