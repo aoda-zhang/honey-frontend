@@ -72,9 +72,7 @@ const Fare: FC = () => {
   }
   return (
     <div className={styles.fare}>
-      {isLoading ? (
-        <Spin size="large" spinning={isLoading} prefixCls="医院获取中..."></Spin>
-      ) : (
+      <Spin size="large" spinning={isLoading} tip="医院获取中......">
         <Form name="basic" onFinish={onFinish} autoComplete="true" form={form}>
           {status.isEdit && (
             <Form.Item
@@ -120,13 +118,13 @@ const Fare: FC = () => {
             </Form.Item>
           </div>
         </Form>
-      )}
-      <Info
-        isOpen={status.isInfoOpen}
-        onClose={() => {
-          setStatus({ ...status, isInfoOpen: false })
-        }}
-      ></Info>
+        <Info
+          isOpen={status.isInfoOpen}
+          onClose={() => {
+            setStatus({ ...status, isInfoOpen: false })
+          }}
+        ></Info>
+      </Spin>
     </div>
   )
 }
