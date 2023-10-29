@@ -118,3 +118,4 @@ dist
 
 ./src
 .env
+./src/setupProxy.js
