@@ -118,7 +118,7 @@ dist
 
 ./src
 .env
-./src/setupProxy.js
 # mac icon
 .DS_Store
+
 src/setupProxy.js
