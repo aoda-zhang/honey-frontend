@@ -6,7 +6,7 @@ export type Address = {
 }
 class AddressAPI {
   getAddressList = () => {
-    return httpService.getAPI<Address[]>('/api/address/list')
+    return httpService.getAPI<Address[]>('/hospital/list')
   }
 }
 const addressAPI = new AddressAPI()
