@@ -1,6 +1,7 @@
 import envConfig from '@/config/env'
 import message from 'antd/es/message'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios'
+import { HttpResponseType } from './interface'
 const Http = axios.create({
   timeout: 20000,
   baseURL: envConfig.baseURL
@@ -29,9 +30,9 @@ Http.interceptors.request.use(interceptorsReq, err => {
 })
 
 // 成功响应拦截处理
-const interceptorsResSuccess = <T>(response: AxiosResponse<T>) => {
-  if (response.status >= 200 && response.status < 400) {
-    const responseData = response?.data
+const interceptorsResSuccess = (response: AxiosResponse<HttpResponseType>) => {
+  if (response?.data?.status >= 200 && response?.data?.status < 400 && response?.data?.isSuccess) {
+    const responseData = response?.data?.data
     return Promise.resolve(responseData)
   } else {
     errorHandler(response.status)
