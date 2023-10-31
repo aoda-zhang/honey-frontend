@@ -15,6 +15,9 @@ interface envType {
   authCode: string
   noAuthMessage: string
   backendBaseURL: string
+  apiKey: {
+    bussiness: string
+  }
 }
 const envConfig: envType = require(`./${currentEnv}`)
 export default envConfig

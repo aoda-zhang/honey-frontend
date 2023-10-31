@@ -7,5 +7,8 @@ module.exports = {
     authCode: process.env.REACT_APP_AUTHCODE,
     noAuthMessage: '个人网站，请勿滥用，输入正确的授权码可进入'
   },
-  colorPrimary: '#1c7d29'
+  colorPrimary: '#1c7d29',
+  apiKey: {
+    bussiness: process.env.REACT_APP_BUSSINESS_API_KEY
+  }
 }
