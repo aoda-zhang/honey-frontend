@@ -9,7 +9,6 @@ module.exports = {
     secritySaltCode: process.env.REACT_APP_SECRITYSALTCODE
   },
   colorPrimary: '#1c7d29',
-  backendBaseURL: process.env.REACT_APP_backendBaseURL,
   apiKey: {
     bussiness: process.env.REACT_APP_BUSSINESS_API_KEY
   }

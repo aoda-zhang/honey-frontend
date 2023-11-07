@@ -14,7 +14,6 @@ interface envType {
   colorPrimary: string
   authCode: string
   noAuthMessage: string
-  backendBaseURL: string
   apiKey: {
     bussiness: string
   }

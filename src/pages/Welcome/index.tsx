@@ -10,49 +10,55 @@ const Welcome: FC = () => {
   const navigate = useNavigate()
   const [messageApi, contextHolder] = message.useMessage()
   const [isAuthed, setIsAuthed] = useState(false)
-  const verifyAuth = (target: string) => {
-    const secretCode = sha256(
-      `${sha256(target)?.toString()}${envConfig?.auth?.secritySaltCode}`
-    )?.toString()
-    return secretCode === envConfig?.auth?.authCode
-  }
+  // const verifyAuth = (target: string) => {
+  //   const secretCode = sha256(
+  //     `${sha256(target)?.toString()}${envConfig?.auth?.secritySaltCode}`
+  //   )?.toString()
+  //   return secretCode === envConfig?.auth?.authCode
+  // }
 
   useEffect(() => {
-    const secretCode = storage.get('authKey')
-    if (verifyAuth(secretCode)) {
-      setIsAuthed(true)
-      navigate('/fare')
-    } else {
-      setIsAuthed(false)
-      messageApi.open({
-        type: 'error',
-        content: envConfig?.auth?.noAuthMessage
-      })
-    }
-  }, [messageApi, navigate])
-  const onPressEnter = e => {
-    const authCode = e?.target?.value
-    if (verifyAuth(authCode)) {
-      storage.set('authKey', authCode)
-    } else {
-      messageApi.open({
-        type: 'error',
-        content: envConfig?.auth?.noAuthMessage
-      })
-    }
-  }
+    // const secretCode = storage.get('authKey')
+    navigate('/fare')
+    // if (verifyAuth(secretCode)) {
+    //   setIsAuthed(true)
+    //   navigate('/fare')
+    // } else {
+    //   setIsAuthed(false)
+    //   messageApi.open({
+    //     type: 'error',
+    //     content: envConfig?.auth?.noAuthMessage
+    //   })
+    // }
+  }, [navigate])
+  // const onPressEnter = e => {
+  //   const authCode = e?.target?.value
+  //   // if (verifyAuth(authCode)) {
+  //   //   storage.set('authKey', authCode)
+  //   // } else {
+  //   //   messageApi.open({
+  //   //     type: 'error',
+  //   //     content: envConfig?.auth?.noAuthMessage
+  //   //   })
+  //   // }
+  // }
   return (
     <>
       {contextHolder}
       <div className={styles.welcome}>
         <img src={welcomeIMG} alt="" />
-        {isAuthed && <div className={styles.message}>{envConfig.welcomeMessage}</div>}
+        {/* {isAuthed && (
+          <div className={styles.message}>{envConfig.welcomeMessage}</div>
+        )}
         {!isAuthed && (
           <div className={styles.auth}>
             <div>{envConfig?.auth?.inputAuthCode}</div>
-            <Input placeholder="Please input auth code" onPressEnter={onPressEnter} />
+            <Input
+              placeholder="Please input auth code"
+              onPressEnter={onPressEnter}
+            />
           </div>
-        )}
+        )} */}
       </div>
     </>
   )
