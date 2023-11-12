@@ -8,8 +8,7 @@ const Http = axios.create({
 })
 // 自定义请求头
 const customHeaders = {
-  Accept: 'application/json',
-  'x-api-key': envConfig?.apiKey?.bussiness ?? ''
+  Accept: 'application/json'
 }
 
 // 成功请求config处理
