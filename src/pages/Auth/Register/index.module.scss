@@ -2,16 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.54rem;
   padding: 2.54rem;
   .icon {
     width: 10.69rem;
+    margin-bottom: 1.54rem;
   }
   .form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.23rem;
   }
   .submitBtn {
     width: 100%;

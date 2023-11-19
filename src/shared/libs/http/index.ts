@@ -2,13 +2,15 @@ import envConfig from '@/config/env'
 import message from 'antd/es/message'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios'
 import { HttpResponseType } from './interface'
+import storage from '@/shared/utils/storage'
 const Http = axios.create({
   timeout: 20000,
   baseURL: envConfig.baseURL
 })
 // 自定义请求头
 const customHeaders = {
-  Accept: 'application/json'
+  Accept: 'application/json',
+  'access-token': storage.get('access-token')
 }
 
 // 成功请求config处理
@@ -49,7 +51,7 @@ const httpService = {
     url: string,
     params?: Record<string, any>,
     config?: AxiosRequestConfig
-  ): Promise<T | any> {
+  ): Promise<T> {
     // @ts-ignore
     return Http.get<T>(url, { params, ...config })
   },
@@ -65,7 +67,7 @@ const httpService = {
     url: string,
     data?: Record<string, any>,
     config?: AxiosRequestConfig
-  ): Promise<T | any> {
+  ): Promise<T> {
     // @ts-ignore
     return Http.post<T>(url, data, { ...config })
   },
