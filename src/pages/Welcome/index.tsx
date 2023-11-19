@@ -8,7 +8,7 @@ const Welcome: FC = () => {
   const [messageApi, contextHolder] = message.useMessage()
 
   useEffect(() => {
-    navigate('/fare')
+    // navigate('/fare')
   }, [navigate])
   return (
     <>

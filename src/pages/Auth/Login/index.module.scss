@@ -1,0 +1,29 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.54rem;
+  padding: 2.54rem;
+  .icon {
+    width: 10.69rem;
+  }
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.23rem;
+  }
+  .submitBtn {
+    width: 100%;
+    height: 3.08rem;
+    margin-top: 1.54rem;
+  }
+  .help {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: -2.31rem;
+    cursor: pointer;
+  }
+}
