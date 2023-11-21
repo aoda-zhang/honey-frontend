@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input } from 'antd'
 import register from '@/shared/assets/images/register.png'
 import style from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +8,6 @@ import authAPI from '../apis'
 import storage from '@/shared/utils/storage'
 
 const Register: FC = () => {
-  const [messageApi, contextHolder] = message.useMessage()
   const navigate = useNavigate()
   const onRegister = async (value: AuthFieldType) => {
     try {
@@ -23,22 +22,13 @@ const Register: FC = () => {
         await storage.set('access-token', loginInfo.accessToken)
         await storage.set('refreshToken', loginInfo.refreshToken)
         navigate('/fare')
-      } else {
-        messageApi.open({
-          type: 'error',
-          content: '注册失败，请重新注册！！'
-        })
       }
     } catch (error) {
-      messageApi.open({
-        type: 'error',
-        content: '注册失败，请重新注册！！'
-      })
+      console.error(`注册失败:${error}`)
     }
   }
   return (
     <div className={style.register}>
-      {contextHolder}
       <img src={register} alt="" className={style.icon} />
       <Form className={style.form} name="login" onFinish={onRegister} autoComplete="off">
         <Form.Item<AuthFieldType>

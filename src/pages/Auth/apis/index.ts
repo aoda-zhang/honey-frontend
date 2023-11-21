@@ -8,7 +8,7 @@ class AuthAPI {
     return httpService.postAPI<LoginInfo>('/auth/login', userInfo)
   }
   refreshToken = (token: { refreshToken: string }) => {
-    return httpService.postAPI('/auth/refresh', token)
+    return httpService.postAPI<LoginInfo>('/auth/refresh', token)
   }
 }
 const authAPI = new AuthAPI()

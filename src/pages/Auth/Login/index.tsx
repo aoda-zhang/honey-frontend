@@ -4,10 +4,22 @@ import lover from '@/shared/assets/images/glove.png'
 import style from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import { AuthFieldType } from '../types'
+import storage from '@/shared/utils/storage'
+import authAPI from '../apis'
 const Login: FC = () => {
   const navigate = useNavigate()
-  const onLogin = () => {
-    console.log(99)
+  const onLogin = async (value: Omit<AuthFieldType, 'phoneNumber'>) => {
+    try {
+      const loginInfo = await authAPI.login({
+        username: value?.username,
+        password: value?.password
+      })
+      await storage.set('access-token', loginInfo.accessToken)
+      await storage.set('refreshToken', loginInfo.refreshToken)
+      navigate('/fare')
+    } catch (error) {
+      console.error(`登陆出错:${error}`)
+    }
   }
   return (
     <div className={style.login}>
@@ -18,13 +30,6 @@ const Login: FC = () => {
           rules={[{ required: true, message: '请输入你的账户名' }]}
         >
           <Input placeholder="账户名" />
-        </Form.Item>
-
-        <Form.Item<AuthFieldType>
-          name="phoneNumber"
-          rules={[{ required: true, message: '请输入你的手机号' }]}
-        >
-          <Input placeholder="手机号" />
         </Form.Item>
 
         <Form.Item<AuthFieldType>

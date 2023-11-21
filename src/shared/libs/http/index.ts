@@ -1,33 +1,31 @@
 import envConfig from '@/config/env'
-import message from 'antd/es/message'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosRequestHeaders } from 'axios'
-import { HttpResponseType } from './interface'
+import { HttpResponseType, commonHeader } from './interface'
 import storage from '@/shared/utils/storage'
+import httpErrorHandler from './errorHandle'
 const Http = axios.create({
   timeout: 20000,
   baseURL: envConfig.baseURL
 })
-// 自定义请求头
-const customHeaders = {
-  Accept: 'application/json',
-  'access-token': storage.get('access-token')
+// 自定义请求头 函数式调用可及时更新local获取的参数
+const getHttpHeaders = () => {
+  return {
+    Accept: 'application/json',
+    'Access-Token': storage.get(commonHeader['access-token'])
+  }
 }
 
 // 成功请求config处理
 const interceptorsReq = (config: AxiosRequestHeaders) => {
   // @ts-ignore
-  config.headers = { ...config.headers, ...customHeaders }
+  config.headers = { ...config.headers, ...getHttpHeaders() }
   return config
-}
-
-const errorHandler = error => {
-  message.error(`${error}${envConfig?.commonErrorMessage}`)
 }
 
 // 请求拦截处理
 // @ts-ignore
 Http.interceptors.request.use(interceptorsReq, err => {
-  errorHandler(err)
+  httpErrorHandler(err)
   return Promise.reject(err?.message)
 })
 
@@ -37,13 +35,14 @@ const interceptorsResSuccess = (response: AxiosResponse<HttpResponseType>) => {
     const responseData = response?.data?.data
     return Promise.resolve(responseData)
   } else {
-    errorHandler(response.status)
+    httpErrorHandler(response?.data)
     return Promise.reject()
   }
 }
 // 响应拦截处理
 Http.interceptors.response.use(interceptorsResSuccess, error => {
-  errorHandler(error?.message)
+  console.log('esponse?.data-----------', error)
+  httpErrorHandler(error?.response?.data)
   return Promise.reject(error)
 })
 const httpService = {
