@@ -15,43 +15,41 @@ import styles from './index.module.scss'
 import fareStore from './store'
 import Info from './Info'
 import globalStore from '@/shared/store/globalStore'
-import addressAPI from './apis'
+import fareAPI from './apis'
+import historyAPI from '../History/apis'
+import { observer } from 'mobx-react-lite'
 const Fare: FC = () => {
-  const { setAddress, addresses } = globalStore
-  const { setForm, setDate } = fareStore
+  const { setHospital, hospitales } = globalStore
+  const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } = fareStore
   const [isLoading, setLoading] = useState(true)
   const [form] = Form.useForm()
-  const [status, setStatus] = useState({
-    isEdit: true,
-    isView: false,
-    isInfoOpen: false
-  })
-  const fetchData = useCallback(() => {
-    addressAPI
-      .getAddressList()
+  const getHospitals = useCallback(() => {
+    fareAPI
+      .getHospitalList()
       .then(data => {
-        const addressList = data?.map(item => ({
+        const hospitalList = data?.map(item => ({
           label: item?.name,
           value: item?.name
         }))
-        setAddress(addressList)
+        setHospital(hospitalList)
       })
       .finally(() => {
         setLoading(false)
       })
-  }, [setAddress])
+  }, [setHospital])
+
   useEffect(() => {
-    if (addresses?.length === 0) {
-      fetchData()
+    if (hospitales?.length === 0) {
+      getHospitals()
     }
-  }, [addresses?.length, fetchData])
+  }, [hospitales?.length, getHospitals])
 
   const onFinish = (value: FormValue) => {
-    const formData = value?.bMap?.map(item => {
+    const formData = value?.fareInfo?.map(item => {
       const average = Math.floor(Math.random() * MAX_AVE_SPEED + MIN_AVE_SPEED)
       const MAX_SPEED = average + 30
       return {
-        time: `${value?.spendDate} ${item?.time}`,
+        startTime: `${value?.spendDate} ${item?.startTime}`,
         from: item.from,
         to: item.to,
         spendTime: item?.spendTime,
@@ -61,20 +59,43 @@ const Fare: FC = () => {
         expectedOil: (item?.allMileage * AVE_OIL)?.toFixed(2)
       }
     })
-    const BMapList = formData?.sort((c, b) => +dayjs(b.time)?.valueOf() - +dayjs(c.time)?.valueOf())
-    if (BMapList?.length > 0) {
-      setForm(BMapList)
+    const fareInfo = formData?.sort(
+      (c, b) => +dayjs(b.startTime)?.valueOf() - +dayjs(c.startTime)?.valueOf()
+    )
+    if (fareInfo?.length > 0) {
+      addHistory(value)
+      updateHospital(value)
+      setForm(fareInfo)
       setDate(value?.spendDate)
-      setStatus({ ...status, isEdit: false, isView: true })
+      setCurrentDate(value?.spendDate)
+      setFareStatus({ isEdit: false, isView: true })
     } else {
       message.error(NO_DATA_MESSAGE)
     }
+  }
+  const addHistory = (value: FormValue) => {
+    const fareHistory = value?.fareInfo?.map(item => ({
+      ...item,
+      from: item?.from?.[0],
+      to: item?.to?.[0]
+    }))
+
+    historyAPI.addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory }).then(() => {
+      message.success(`${value?.spendDate}报销已保存`)
+    })
+  }
+  const updateHospital = (value: FormValue) => {
+    const hospitals = value?.fareInfo?.map(item => [item?.from?.[0], item?.to?.[0]])?.flat(Infinity)
+    fareAPI.updateHospital(hospitals).then(() => {
+      getHospitals()
+      message.success('医院信息已更新')
+    })
   }
   return (
     <div className={styles.fare}>
       <Spin size="large" spinning={isLoading} tip="医院获取中......">
         <Form name="basic" onFinish={onFinish} autoComplete="true" form={form}>
-          {status.isEdit && (
+          {fareStatus.isEdit && (
             <Form.Item
               label="本次报销月份"
               name="spendDate"
@@ -85,8 +106,8 @@ const Fare: FC = () => {
             </Form.Item>
           )}
 
-          {status.isEdit && <BusinessMap />}
-          {status.isView && <PreviewMap />}
+          {fareStatus.isEdit && <BusinessMap />}
+          {fareStatus.isView && <PreviewMap />}
           <div className={styles.buttons}>
             <Form.Item>
               <Button type="primary" htmlType="submit">
@@ -97,8 +118,7 @@ const Fare: FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  setStatus({
-                    ...status,
+                  setFareStatus({
                     isInfoOpen: true
                   })
                 }}
@@ -110,7 +130,7 @@ const Fare: FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  setStatus({ ...status, isEdit: true, isView: false })
+                  setFareStatus({ isEdit: true, isView: false })
                 }}
               >
                 {PageStatus.Edit}
@@ -119,13 +139,13 @@ const Fare: FC = () => {
           </div>
         </Form>
         <Info
-          isOpen={status.isInfoOpen}
+          isOpen={fareStatus.isInfoOpen}
           onClose={() => {
-            setStatus({ ...status, isInfoOpen: false })
+            setFareStatus({ isInfoOpen: false })
           }}
         ></Info>
       </Spin>
     </div>
   )
 }
-export default Fare
+export default observer(Fare)

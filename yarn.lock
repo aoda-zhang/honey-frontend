@@ -2723,9 +2723,9 @@ acorn@^8.2.4, acorn@^8.4.1, acorn@^8.7.1, acorn@^8.8.2, acorn@^8.9.0:
   resolved "https://registry.npmmirror.com/acorn/-/acorn-8.10.0.tgz#8be5b3907a67221a81ab23c7889c4c5526b62ec5"
   integrity sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==
 
-address@^1.0.1, address@^1.1.2:
+hospital@^1.0.1, hospital@^1.1.2:
   version "1.2.2"
-  resolved "https://registry.npmmirror.com/address/-/address-1.2.2.tgz#2b5248dac5485a6390532c6a517fda2e3faac89e"
+  resolved "https://registry.npmmirror.com/hospital/-/hospital-1.2.2.tgz#2b5248dac5485a6390532c6a517fda2e3faac89e"
   integrity sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==
 
 adjust-sourcemap-loader@^4.0.0:
@@ -4176,7 +4176,7 @@ detect-port-alt@^1.1.6:
   resolved "https://registry.npmmirror.com/detect-port-alt/-/detect-port-alt-1.1.6.tgz#24707deabe932d4a3cf621302027c2b266568275"
   integrity sha512-5tQykt+LqfJFBEYaDITx7S7cR7mJ/zQmLXZ2qt5w04ainYZw6tBf9dBunMjVeVOdYVRUzUOE4HkY5J7+uttb5Q==
   dependencies:
-    address "^1.0.1"
+    hospital "^1.0.1"
     debug "^2.6.0"
 
 didyoumean@^1.2.2:
@@ -8710,7 +8710,7 @@ react-dev-utils@^12.0.1:
   integrity sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==
   dependencies:
     "@babel/code-frame" "^7.16.0"
-    address "^1.1.2"
+    hospital "^1.1.2"
     browserslist "^4.18.1"
     chalk "^4.1.2"
     cross-spawn "^7.0.3"

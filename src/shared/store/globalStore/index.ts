@@ -1,11 +1,11 @@
 import { makeAutoObservable } from 'mobx'
 class GlobalStore {
-  addresses = []
+  hospitales = []
   constructor() {
     makeAutoObservable(this)
   }
-  setAddress = data => {
-    this.addresses = data
+  setHospital = data => {
+    this.hospitales = data
   }
 }
 const globalStore = new GlobalStore()

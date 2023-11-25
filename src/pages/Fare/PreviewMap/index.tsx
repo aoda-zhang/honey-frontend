@@ -14,9 +14,9 @@ const PreviewMap: FC = () => {
               <span>
                 <img className={styles.carIcon} src={carIcon}></img>
               </span>
-              <span className={styles.text}>{item?.time}</span>
+              <span className={styles.text}>{item?.startTime}</span>
             </div>
-            <div className={styles.address}>
+            <div className={styles.hospital}>
               <span className={styles.icon}>
                 <span className={styles.redC}></span>
                 <span className={styles.borderC}></span>

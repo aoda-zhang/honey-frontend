@@ -1,10 +1,10 @@
-export interface AddressType {
+export interface hospitalType {
   label: string
   value: string
 }
-export interface BMap {
+export interface FareInfo {
   // 出发时间
-  time: string
+  startTime: string
   // 出发地点
   from: string
   // 到达地点
@@ -18,11 +18,19 @@ export interface BMap {
   // 最大速度
   maxSpend?: number
   // 预估油费
-  expectedOil: number
+  expectedOil?: number
 }
-export type AddressOption = {
+export type hospitalOption = {
   label: string
   value: string
 }
-export type FormValue = { spendDate: string; bMap: BMap[] }
-export type FormDataType = { bMap: BMap[] }
+export type FormValue = { spendDate: string; fareInfo: FareInfo[] }
+export type FormDataType = { fareInfo: FareInfo[] }
+export type FareProcessStatus = {
+  isEdit: boolean
+  isView: boolean
+  isInfoOpen: boolean
+}
+export type FareProcessStatusItem = {
+  [K in keyof FareProcessStatus]?: FareProcessStatus[K]
+}

@@ -16,7 +16,7 @@ const Register: FC = () => {
       if (isRegrester) {
         // 获取登陆信息
         const loginInfo = await authAPI.login({
-          username: value?.username,
+          userName: value?.userName,
           password: value?.password
         })
         await storage.set('access-token', loginInfo.accessToken)
@@ -32,7 +32,7 @@ const Register: FC = () => {
       <img src={register} alt="" className={style.icon} />
       <Form className={style.form} name="login" onFinish={onRegister} autoComplete="off">
         <Form.Item<AuthFieldType>
-          name="username"
+          name="userName"
           rules={[{ required: true, message: '请输入注册账户名' }]}
         >
           <Input placeholder="账户名" />

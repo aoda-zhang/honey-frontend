@@ -2,13 +2,15 @@ import { Drawer } from 'antd'
 import React, { FC } from 'react'
 import fareStore from '../store'
 import styles from './index.module.scss'
+import { observer } from 'mobx-react-lite'
+import envConfig from '@/config/env'
 type Props = {
   isOpen: boolean
   onClose: () => void
 }
 const Info: FC<Props> = props => {
   const { isOpen, onClose } = props
-  const { faredDate, getFaredAddress, getRepeatAddress } = fareStore
+  const { currentDate, getCurrentFaredhospital, getCurrentTotalMileage } = fareStore
   return (
     <Drawer
       title="本次报销详情"
@@ -20,38 +22,31 @@ const Info: FC<Props> = props => {
       className={styles.info}
     >
       <div>
-        <p className={styles.title}>已报销的日期</p>
+        <p className={styles.title}>报销日期</p>
+        <p className={styles.values}>{currentDate}</p>
+      </div>
+
+      <div>
+        <p className={styles.title}>报销医院</p>
         <p className={styles.values}>
-          {faredDate?.map((item, i) => (
+          {getCurrentFaredhospital?.map((item, i) => (
             <span key={i} className={styles.val}>
               {item}
             </span>
           ))}
         </p>
       </div>
+
       <div>
-        <p className={styles.title}>本次报销的医院</p>
-        <p className={styles.values}>
-          {getFaredAddress?.map((item, i) => (
-            <span key={i} className={styles.val}>
-              {item}
-            </span>
-          ))}
-        </p>
+        <p className={styles.title}>报销总里程</p>
+        <p className={styles.values}>{getCurrentTotalMileage}</p>
       </div>
+
       <div>
-        <p className={styles.title}>重复报销的医院</p>
-        <p className={styles.values}>
-          {getRepeatAddress?.map((item, i) => (
-            <p key={i} className={styles.val}>
-              <span>重复日期：{item?.time}</span>
-              {'   '}
-              <span>重复地址：{item?.to}</span>
-            </p>
-          ))}
-        </p>
+        <p className={styles.title}>预估报销总油费</p>
+        <p className={styles.values}>{(getCurrentTotalMileage * envConfig.oilPrice).toFixed(2)}</p>
       </div>
     </Drawer>
   )
 }
-export default Info
+export default observer(Info)

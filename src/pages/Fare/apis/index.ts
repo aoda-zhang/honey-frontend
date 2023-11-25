@@ -1,13 +1,15 @@
 import httpService from '@/shared/libs/http'
-
-export type Address = {
+export type hospital = {
   id: string
   name: string
 }
-class AddressAPI {
-  getAddressList = () => {
-    return httpService.getAPI<Address[]>('/hospital/list')
+class FareAPI {
+  getHospitalList = () => {
+    return httpService.getAPI<hospital[]>('/hospital/list')
+  }
+  updateHospital = (hospitals: any[]) => {
+    return httpService.postAPI<hospital[]>('/hospital/update/?:id', hospitals)
   }
 }
-const addressAPI = new AddressAPI()
-export default addressAPI
+const fareAPI = new FareAPI()
+export default fareAPI

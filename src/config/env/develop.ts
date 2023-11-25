@@ -11,5 +11,6 @@ module.exports = {
   colorPrimary: '#1c7d29',
   apiKey: {
     bussiness: process.env.REACT_APP_BUSSINESS_API_KEY
-  }
+  },
+  oilPrice: process.env.REACT_APP_OIL_PRICE
 }

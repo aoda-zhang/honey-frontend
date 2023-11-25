@@ -7,10 +7,10 @@ import { observer } from 'mobx-react-lite'
 import globalStore from '@/shared/store/globalStore'
 
 const BusinessMap: React.FC = () => {
-  const { addresses } = globalStore
+  const { hospitales } = globalStore
   return (
     <div className={styles.form}>
-      <Form.List name="bMap">
+      <Form.List name="fareInfo">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
@@ -18,7 +18,7 @@ const BusinessMap: React.FC = () => {
                 <Form.Item
                   {...restField}
                   label="出发时间"
-                  name={[name, 'time']}
+                  name={[name, 'startTime']}
                   rules={[{ required: true, message: '请输入出发时间' }]}
                 >
                   <Input placeholder="示例 16:24" />
@@ -40,7 +40,7 @@ const BusinessMap: React.FC = () => {
                     mode="tags"
                     placeholder="请选择出发医院"
                     optionFilterProp="children"
-                    options={addresses}
+                    options={hospitales}
                   />
                 </Form.Item>
                 <Form.Item
@@ -59,7 +59,7 @@ const BusinessMap: React.FC = () => {
                     mode="tags"
                     placeholder="请选择到达医院"
                     optionFilterProp="children"
-                    options={addresses}
+                    options={hospitales}
                   />
                 </Form.Item>
                 <Form.Item

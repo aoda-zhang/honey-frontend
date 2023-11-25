@@ -11,7 +11,7 @@ const Login: FC = () => {
   const onLogin = async (value: Omit<AuthFieldType, 'phoneNumber'>) => {
     try {
       const loginInfo = await authAPI.login({
-        username: value?.username,
+        userName: value?.userName,
         password: value?.password
       })
       await storage.set('access-token', loginInfo.accessToken)
@@ -26,7 +26,7 @@ const Login: FC = () => {
       <img src={lover} alt="" className={style.icon} />
       <Form className={style.form} name="login" onFinish={onLogin} autoComplete="off">
         <Form.Item<AuthFieldType>
-          name="username"
+          name="userName"
           rules={[{ required: true, message: '请输入你的账户名' }]}
         >
           <Input placeholder="账户名" />

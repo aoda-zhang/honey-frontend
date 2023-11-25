@@ -17,6 +17,7 @@ interface envType {
   apiKey: {
     bussiness: string
   }
+  oilPrice: number
 }
 const envConfig: envType = require(`./${currentEnv}`)
 export default envConfig
