@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "experimentalDecorators": true,
     "allowJs": true,
@@ -18,10 +18,9 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
     }
   },
   "include": ["src/**/*", "public/config", "config"],
   "exclude": ["node_modules", "src/**/*.spec.ts"],
-  "extends": "./paths.json"
 }
