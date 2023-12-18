@@ -43,6 +43,8 @@
     "prepare": "husky install",
     "dev": "cross-env  NODE_ENV=develop craco start ",
     "build": "cross-env  NODE_ENV=production craco build",
+    "lint": "eslint --fix",
+    "format": "prettier --write",
     "lint-staged": "lint-staged"
   },
   "browserslist": {
@@ -58,13 +60,11 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "src/**/*.{js,jsx,tsx,ts,scss,md,json}": [
-      "prettier --config .prettierrc --write"
+    "src/**/*.{ts,tsx,js,jsx}": [
+        "yarn run format",
+        "yarn run lint"
     ]
-  },
+},
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.15.4",
     "@craco/craco": "^7.1.0",
