@@ -43,7 +43,7 @@
     "prepare": "husky install",
     "dev": "cross-env  NODE_ENV=develop craco start ",
     "build": "cross-env  NODE_ENV=production craco build",
-    "pre-commit": "lint-staged"
+    "lint-staged": "lint-staged"
   },
   "browserslist": {
     "production": [
