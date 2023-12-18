@@ -8,8 +8,7 @@ const storage = {
   },
   get(key) {
     try {
-      const value = localSto
-      rage.getItem(key)
+      const value = localStorage.getItem(key)
       return value ? JSON.parse(value) : null
     } catch (error) {
       console.error('localStorage获取数据时出错：', error)
