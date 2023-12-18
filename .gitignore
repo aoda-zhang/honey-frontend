@@ -116,7 +116,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-./src
 .env
 # mac icon
 .DS_Store
