@@ -4,7 +4,8 @@ import routeList from './router'
 import { useRoutes } from 'react-router-dom'
 
 const App: React.FC = () => {
-  const router = useRoutes(routeList)
+  const router = useR
+  outes(routeList)
   return router
 }
 
