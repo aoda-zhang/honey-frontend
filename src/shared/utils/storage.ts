@@ -1,7 +1,8 @@
 const storage = {
   set(key, value) {
     try {
-      localStorage.setItem(key, JSON.stringify(value))
+      localStorage.setI
+      tem(key, JSON.stringify(value))
     } catch (error) {
       console.error('localStorage设置数据时出错：', error)
     }
