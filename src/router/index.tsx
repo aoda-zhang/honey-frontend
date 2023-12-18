@@ -4,11 +4,16 @@ import Fare from '@/pages/Fare'
 import Login from '@/pages/Auth/Login'
 import Register from '@/pages/Auth/Register'
 import History from '@/pages/History'
+import Home from '@/pages/Home'
 
 const routerList: RouteObject[] = [
   {
     path: '/',
-    element: <Login />
+    element: <Home />
+  },
+  {
+    path: 'home',
+    element: <Home />
   },
   {
     path: 'fare',
@@ -28,7 +33,7 @@ const routerList: RouteObject[] = [
   },
   {
     path: '*',
-    element: <Login />
+    element: <Home />
   }
 ]
 

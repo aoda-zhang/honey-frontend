@@ -11,10 +11,13 @@ const PreviewMap: FC = () => {
         {formData?.map((item, index) => (
           <div className={styles.item} key={index}>
             <div className={styles.time}>
-              <span>
-                <img className={styles.carIcon} src={carIcon}></img>
+              <span className={styles.left}>
+                <span>
+                  <img className={styles.carIcon} src={carIcon}></img>
+                </span>
+                <span className={styles.text}>{item?.startTime}</span>
               </span>
-              <span className={styles.text}>{item?.startTime}</span>
+              <span className={styles.follow}>一键跟走</span>
             </div>
             <div className={styles.hospital}>
               <span className={styles.icon}>

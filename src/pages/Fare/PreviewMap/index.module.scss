@@ -22,26 +22,39 @@
       .time {
         display: flex;
         grid-gap: 0.71rem;
-        gap: 0.71rem;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 1.43rem;
         padding-bottom: 0.57rem;
         border-bottom: 1px solid #374361;
-
-        .text {
-          color: $gray6;
+        .left {
+          display: flex;
+          gap: 0.77rem;
+          align-items: center;
+          .carIcon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 1.54rem;
+            height: 1.54rem;
+            padding: 0.23rem;
+            background-color: #275bfa;
+            border-radius: 50%;
+          }
+          .text {
+            color: $gray6;
+          }
         }
-
-        .carIcon {
+        .follow {
           display: flex;
           justify-content: center;
           align-items: center;
-          box-sizing: border-box;
-          width: 1.54rem;
-          height: 1.54rem;
-          padding: 0.23rem;
-          background-color: #275bfa;
-          border-radius: 50%;
+          padding: 0.15rem 0.46rem;
+          border: 1px solid $gray6;
+          border-radius: 1.54rem;
+          color: $gray6;
+          font-size: 0.77rem;
         }
       }
 

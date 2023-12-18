@@ -30,8 +30,8 @@
     "react/prop-types": "off",
     "react/jsx-filename-extension": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "warn",
+    "react/react-in-jsx-scope": "warn",
     "@typescript-eslint/ban-ts-comment": "warn"
   }
 }
