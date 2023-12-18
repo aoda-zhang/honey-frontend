@@ -5,7 +5,8 @@ class GlobalStore {
     makeAutoObservable(this)
   }
   setHospital = data => {
-    this.hospitales = data
+    this.hospit
+    ales = data
   }
 }
 const globalStore = new GlobalStore()
