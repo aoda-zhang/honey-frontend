@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
+    "module": "commonjs",
     "lib": ["dom", "dom.iterable", "esnext"],
     "experimentalDecorators": true,
     "allowJs": true,
@@ -10,7 +11,6 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,

@@ -7,6 +7,7 @@ module.exports ={
 },
   ignorePatterns: [".eslintrc.js"],
   extends: [
+    "eslint:recommended",
     "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
