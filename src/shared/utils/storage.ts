@@ -1,15 +1,15 @@
 const storage = {
   set(key, value) {
     try {
-      localStorage.setI
-      tem(key, JSON.stringify(value))
+      localStorage.setItem(key, JSON.stringify(value))
     } catch (error) {
       console.error('localStorage设置数据时出错：', error)
     }
   },
   get(key) {
     try {
-      const value = localStorage.getItem(key)
+      const value = localSto
+      rage.getItem(key)
       return value ? JSON.parse(value) : null
     } catch (error) {
       console.error('localStorage获取数据时出错：', error)
