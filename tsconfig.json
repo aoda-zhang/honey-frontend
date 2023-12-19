@@ -15,12 +15,12 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
     }
   },
-  "include": ["src/**/*", "public/config", "config"],
+  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.js","src/**/*.jsx"],
   "exclude": ["node_modules", "src/**/*.spec.ts"],
 }

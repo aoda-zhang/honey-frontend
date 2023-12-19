@@ -1,12 +1,14 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable } from "mobx";
 class GlobalStore {
-  hospitales = []
+  hospitales = [];
+
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
   }
+
   setHospital = data => {
-    this.hospitales = data
-  }
+    this.hospitales = data;
+  };
 }
-const globalStore = new GlobalStore()
-export default globalStore
+const globalStore = new GlobalStore();
+export default globalStore;
