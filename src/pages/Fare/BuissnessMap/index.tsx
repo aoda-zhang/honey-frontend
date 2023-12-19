@@ -84,7 +84,7 @@ const BusinessMap: React.FC = () => {
                   name={[name, "allMileage"]}
                   rules={[{ required: true, message: "请填写总里程数" }]}
                 >
-                  <Input type="number" placeholder="请填写总里程数" />
+                  <Input placeholder="请填写总里程数" />
                 </Form.Item>
                 <MinusCircleOutlined onClick={() => remove(name)} />
               </Space>
