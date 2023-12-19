@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
-  "type": "commonjs",
   "eslintConfig": {
     "extends": [
       "react-app"
@@ -23,7 +22,6 @@
     "craco-sass-resources-loader": "^1.1.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
-    "eslint-plugin-prettier": "^5.0.1",
     "history": "^5.3.0",
     "http-proxy-middleware": "^2.0.4",
     "install": "^0.13.0",
