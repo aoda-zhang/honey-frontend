@@ -1,53 +1,79 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
-import dayjs from 'dayjs'
-import BusinessMap from './BuissnessMap'
-import PreviewMap from './PreviewMap'
-import { Button, Form, message, Input, Spin } from 'antd'
+import React, { FC, useCallback, useEffect, useState } from "react";
+import dayjs from "dayjs";
+import BusinessMap from "./BuissnessMap";
+import PreviewMap from "./PreviewMap";
+import { Button, Form, message, Input, Spin } from "antd";
 import {
   AVE_OIL,
   MAX_AVE_SPEED,
   MIN_AVE_SPEED,
   NO_DATA_MESSAGE,
-  PageStatus
-} from '@/shared/constants'
-import { FormValue } from './types'
-import styles from './index.module.scss'
-import fareStore from './store'
-import Info from './Info'
-import globalStore from '@/shared/store/globalStore'
-import fareAPI from './apis'
-import historyAPI from '../History/apis'
-import { observer } from 'mobx-react-lite'
+  PageStatus,
+} from "@/shared/constants";
+import { FormValue } from "./types";
+import styles from "./index.module.scss";
+import fareStore from "./store";
+import Info from "./Info";
+import globalStore from "@/shared/store/globalStore";
+import fareAPI, { HospitalType } from "./apis";
+import historyAPI from "../History/apis";
+import { observer } from "mobx-react-lite";
 const Fare: FC = () => {
-  const { setHospital, hospitales } = globalStore
-  const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } = fareStore
-  const [isLoading, setLoading] = useState(true)
-  const [form] = Form.useForm()
+  const { setHospital, hospitales } = globalStore;
+  const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } = fareStore;
+  const [isLoading, setLoading] = useState(true);
+  const [form] = Form.useForm();
+  const addHistory = (value: FormValue) => {
+    const fareHistory = value?.fareInfo?.map((item) => ({
+      ...item,
+      from: item?.from?.[0],
+      to: item?.to?.[0],
+    }));
+
+    historyAPI.addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory }).then(() => {
+      message.success(`${value?.spendDate}报销已保存`);
+    });
+  };
+  const storeHospitals = (data: HospitalType[]) => {
+    const hospitalList = data?.map((item) => ({
+      label: item?.name,
+      value: item?.name,
+    }));
+    setHospital(hospitalList);
+  };
   const getHospitals = useCallback(() => {
     fareAPI
       .getHospitalList()
-      .then(data => {
-        const hospitalList = data?.map(item => ({
-          label: item?.name,
-          value: item?.name
-        }))
-        setHospital(hospitalList)
+      .then((data) => {
+        storeHospitals(data);
       })
       .finally(() => {
-        setLoading(false)
-      })
-  }, [setHospital])
+        setLoading(false);
+      });
+  }, [setHospital]);
+
+  const updateHospital = async (value: FormValue) => {
+    const hospitalInfo = value?.fareInfo
+      ?.map((item) => [item?.from?.[0], item?.to?.[0]])
+      ?.flat(Infinity);
+    const newHospitals = hospitalInfo?.map((item) => ({ name: item }));
+    const hospitals = await fareAPI.updateHospital(newHospitals);
+    if (hospitals?.length > 0) {
+      storeHospitals(hospitals);
+      message.success("医院信息已更新");
+    }
+  };
 
   useEffect(() => {
     if (hospitales?.length === 0) {
-      getHospitals()
+      getHospitals();
     }
-  }, [hospitales?.length, getHospitals])
+  }, [hospitales?.length, getHospitals]);
 
   const onFinish = (value: FormValue) => {
-    const formData = value?.fareInfo?.map(item => {
-      const average = Math.floor(Math.random() * MAX_AVE_SPEED + MIN_AVE_SPEED)
-      const MAX_SPEED = average + 30
+    const formData = value?.fareInfo?.map((item) => {
+      const average = Math.floor(Math.random() * MAX_AVE_SPEED + MIN_AVE_SPEED);
+      const MAX_SPEED = average + 30;
       return {
         startTime: `${value?.spendDate} ${item?.startTime}`,
         from: item.from,
@@ -56,41 +82,23 @@ const Fare: FC = () => {
         average,
         maxSpend: Math.floor(Math.random() * (MAX_SPEED - average + 1) + average),
         allMileage: item?.allMileage,
-        expectedOil: (item?.allMileage * AVE_OIL)?.toFixed(2)
-      }
-    })
+        expectedOil: (item?.allMileage * AVE_OIL)?.toFixed(2),
+      };
+    });
     const fareInfo = formData?.sort(
-      (c, b) => +dayjs(b.startTime)?.valueOf() - +dayjs(c.startTime)?.valueOf()
-    )
+      (c, b) => +dayjs(b.startTime)?.valueOf() - +dayjs(c.startTime)?.valueOf(),
+    );
     if (fareInfo?.length > 0) {
-      addHistory(value)
-      updateHospital(value)
-      setForm(fareInfo)
-      setDate(value?.spendDate)
-      setCurrentDate(value?.spendDate)
-      setFareStatus({ isEdit: false, isView: true })
+      addHistory(value);
+      updateHospital(value);
+      setForm(fareInfo);
+      setDate(value?.spendDate);
+      setCurrentDate(value?.spendDate);
+      setFareStatus({ isEdit: false, isView: true });
     } else {
-      message.error(NO_DATA_MESSAGE)
+      message.error(NO_DATA_MESSAGE);
     }
-  }
-  const addHistory = (value: FormValue) => {
-    const fareHistory = value?.fareInfo?.map(item => ({
-      ...item,
-      from: item?.from?.[0],
-      to: item?.to?.[0]
-    }))
-
-    historyAPI.addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory }).then(() => {
-      message.success(`${value?.spendDate}报销已保存`)
-    })
-  }
-  const updateHospital = (value: FormValue) => {
-    const hospitals = value?.fareInfo?.map(item => [item?.from?.[0], item?.to?.[0]])?.flat(Infinity)
-    fareAPI.updateHospital(hospitals).then(() => {
-      getHospitals()
-      message.success('医院信息已更新')
-    })
-  }
+  };
   return (
     <div className={styles.fare}>
       <Spin size="large" spinning={isLoading} tip="医院获取中......">
@@ -99,7 +107,7 @@ const Fare: FC = () => {
             <Form.Item
               label="本次报销月份"
               name="spendDate"
-              rules={[{ required: true, message: '请填写本次报销的月份' }]}
+              rules={[{ required: true, message: "请填写本次报销的月份" }]}
               className={styles.spendDate}
             >
               <Input placeholder="示例 2023.08.23" />
@@ -119,8 +127,8 @@ const Fare: FC = () => {
                 type="primary"
                 onClick={() => {
                   setFareStatus({
-                    isInfoOpen: true
-                  })
+                    isInfoOpen: true,
+                  });
                 }}
               >
                 {PageStatus.Info}
@@ -130,7 +138,7 @@ const Fare: FC = () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  setFareStatus({ isEdit: true, isView: false })
+                  setFareStatus({ isEdit: true, isView: false });
                 }}
               >
                 {PageStatus.Edit}
@@ -141,11 +149,11 @@ const Fare: FC = () => {
         <Info
           isOpen={fareStatus.isInfoOpen}
           onClose={() => {
-            setFareStatus({ isInfoOpen: false })
+            setFareStatus({ isInfoOpen: false });
           }}
         ></Info>
       </Spin>
     </div>
-  )
-}
-export default observer(Fare)
+  );
+};
+export default observer(Fare);

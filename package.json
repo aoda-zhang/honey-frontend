@@ -21,6 +21,7 @@
     "classnames": "^2.3.1",
     "craco-sass-resources-loader": "^1.1.0",
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.10",
     "history": "^5.3.0",
     "http-proxy-middleware": "^2.0.4",
     "install": "^0.13.0",
@@ -44,7 +45,7 @@
     "build": "cross-env  NODE_ENV=production craco build",
     "lint": "eslint --fix",
     "format": "prettier --write",
-    "lint-staged": "lint-staged"
+    "lint-staged": "tsc && lint-staged"
   },
   "browserslist": {
     "production": [

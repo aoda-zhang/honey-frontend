@@ -44,17 +44,18 @@
           }
           .text {
             color: $gray6;
+            font-size: 0.92rem;
           }
         }
         .follow {
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 0.15rem 0.46rem;
+          padding: 0.15rem 0.31rem;
           border: 1px solid $gray6;
           border-radius: 1.54rem;
           color: $gray6;
-          font-size: 0.77rem;
+          font-size: 0.62rem;
         }
       }
 
