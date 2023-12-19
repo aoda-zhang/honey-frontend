@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
+  "type": "commonjs",
   "eslintConfig": {
     "extends": [
       "react-app"
@@ -44,10 +45,9 @@
     "prepare": "husky install",
     "dev": "cross-env  NODE_ENV=develop craco start ",
     "build": "cross-env  NODE_ENV=production craco build",
-    "lint": "eslint --fix",
-    "format": "prettier --write --config ./.prettierrc.js",
-    "lint-staged-ts": "tsc && lint-staged",
-    "lint-staged": "lint-staged"
+    "lint": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json,md}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,md}'",
+    "lint-staged": "tsc && lint-staged"
   },
   "browserslist": {
     "production": [
@@ -79,6 +79,7 @@
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.33.2",

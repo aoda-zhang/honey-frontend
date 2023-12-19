@@ -10,7 +10,8 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "html"
   ],
   "prettier.arrowParens": "avoid",
   "prettier.printWidth": 80,

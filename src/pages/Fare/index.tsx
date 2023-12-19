@@ -14,49 +14,47 @@ import { FormValue } from "./types";
 import styles from "./index.module.scss";
 import fareStore from "./store";
 import Info from "./Info";
-import globalStore from "@/shared/store/globalStore";
 import fareAPI, { HospitalType } from "./apis";
 import historyAPI from "../History/apis";
 import { observer } from "mobx-react-lite";
+import globalStore from "@/shared/store/globalStore";
 const Fare: FC = () => {
   const { setHospital, hospitales } = globalStore;
-  const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } = fareStore;
+  const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
+    fareStore;
   const [isLoading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const addHistory = (value: FormValue) => {
-    const fareHistory = value?.fareInfo?.map((item) => ({
+    const fareHistory = value?.fareInfo?.map(item => ({
       ...item,
       from: item?.from?.[0],
       to: item?.to?.[0],
     }));
 
-    historyAPI.addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory }).then(() => {
-      message.success(`${value?.spendDate}报销已保存`);
-    });
-  };
-  const storeHospitals = (data: HospitalType[]) => {
-    const hospitalList = data?.map((item) => ({
-      label: item?.name,
-      value: item?.name,
-    }));
-    setHospital(hospitalList);
-  };
-  const getHospitals = useCallback(() => {
-    fareAPI
-      .getHospitalList()
-      .then((data) => {
-        storeHospitals(data);
-      })
-      .finally(() => {
-        setLoading(false);
+    historyAPI
+      .addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory })
+      .then(() => {
+        message.success(`${value?.spendDate}报销已保存`);
       });
-  }, [setHospital]);
+  };
+  const storeHospitals = useCallback(
+    (data: HospitalType[]) => {
+      const hospitalList = data?.map(item => ({
+        label: item?.name,
+        value: item?.name,
+      }));
+      if (hospitalList?.length > 0) {
+        setHospital(hospitalList);
+      }
+    },
+    [setHospital],
+  );
 
   const updateHospital = async (value: FormValue) => {
     const hospitalInfo = value?.fareInfo
-      ?.map((item) => [item?.from?.[0], item?.to?.[0]])
+      ?.map(item => [item?.from?.[0], item?.to?.[0]])
       ?.flat(Infinity);
-    const newHospitals = hospitalInfo?.map((item) => ({ name: item }));
+    const newHospitals = hospitalInfo?.map(item => ({ name: item }));
     const hospitals = await fareAPI.updateHospital(newHospitals);
     if (hospitals?.length > 0) {
       storeHospitals(hospitals);
@@ -66,12 +64,19 @@ const Fare: FC = () => {
 
   useEffect(() => {
     if (hospitales?.length === 0) {
-      getHospitals();
+      fareAPI
+        .getHospitalList()
+        .then(data => {
+          storeHospitals(data);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [hospitales?.length, getHospitals]);
+  }, [hospitales?.length, storeHospitals]);
 
   const onFinish = (value: FormValue) => {
-    const formData = value?.fareInfo?.map((item) => {
+    const formData = value?.fareInfo?.map(item => {
       const average = Math.floor(Math.random() * MAX_AVE_SPEED + MIN_AVE_SPEED);
       const MAX_SPEED = average + 30;
       return {
@@ -80,7 +85,9 @@ const Fare: FC = () => {
         to: item.to,
         spendTime: item?.spendTime,
         average,
-        maxSpend: Math.floor(Math.random() * (MAX_SPEED - average + 1) + average),
+        maxSpend: Math.floor(
+          Math.random() * (MAX_SPEED - average + 1) + average,
+        ),
         allMileage: item?.allMileage,
         expectedOil: (item?.allMileage * AVE_OIL)?.toFixed(2),
       };

@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
-import styles from './index.module.scss'
-import carIcon from '@/shared/assets/images/car.png'
-import { observer } from 'mobx-react-lite'
-import fareStore from '../store'
+import React, { FC } from "react";
+import styles from "./index.module.scss";
+import carIcon from "@/shared/assets/images/car.png";
+import { observer } from "mobx-react-lite";
+import fareStore from "../store";
 const PreviewMap: FC = () => {
-  const { formData } = fareStore
+  const { formData } = fareStore;
   return (
     <div className={styles.previewMap}>
       <div className={styles.content} id="ZYR">
@@ -68,7 +68,7 @@ const PreviewMap: FC = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default observer(PreviewMap)
+export default observer(PreviewMap);

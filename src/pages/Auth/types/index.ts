@@ -1,9 +1,9 @@
 export type AuthFieldType = {
-  userName?: string
-  password?: string
-  phoneNumber?: string
-}
+  userName?: string;
+  password?: string;
+  phoneNumber?: string;
+};
 export type LoginInfo = {
-  accessToken: string
-  refreshToken: string
-}
+  accessToken: string;
+  refreshToken: string;
+};

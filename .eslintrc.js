@@ -21,19 +21,10 @@ module.exports = {
     },
     "import/resolver": {
       typescript: {
-        // paths: "./tsconfig.json",
-        // alwaysTryTypes: true,
+        paths: "./tsconfig.json",
+        alwaysTryTypes: true,
       },
     },
-    // "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
-    // "import/parsers": {
-    //   "@typescript-eslint/parser": [".ts", ".tsx"],
-    // },
-    // "import/resolver": {
-    //   node: {
-    //     extensions: [".js", ".jsx", ".ts", ".tsx"],
-    //   },
-    // },
   },
   rules: {
     "react-hooks/rules-of-hooks": "error",
@@ -63,7 +54,7 @@ module.exports = {
     "react/jsx-filename-extension": ["warn", { extensions: [".tsx", ".jsx"] }],
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
-    "@typescript-eslint/explicit-function-return-type": ["warn"],
+    "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/quotes": ["off"],
     "max-len": ["warn", { code: 100, ignoreComments: true, ignoreUrls: true }],
     "import/prefer-default-export": "off",

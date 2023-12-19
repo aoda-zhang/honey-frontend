@@ -1,36 +1,36 @@
-export interface hospitalType {
-  label: string
-  value: string
+export interface HospitalType {
+  label: string;
+  value: string;
 }
 export interface FareInfo {
   // 出发时间
-  startTime: string
+  startTime: string;
   // 出发地点
-  from: string
+  from: string;
   // 到达地点
-  to: string
+  to: string;
   // 总里程
-  allMileage: number
+  allMileage: number;
   // 花费时间
-  spendTime: number
+  spendTime: number;
   // 平均速度
-  average?: number
+  average?: number;
   // 最大速度
-  maxSpend?: number
+  maxSpend?: number;
   // 预估油费
-  expectedOil?: number
+  expectedOil?: number;
 }
-export type hospitalOption = {
-  label: string
-  value: string
-}
-export type FormValue = { spendDate: string; fareInfo: FareInfo[] }
-export type FormDataType = { fareInfo: FareInfo[] }
+export type HospitalOption = {
+  label: string;
+  value: string;
+};
+export type FormValue = { spendDate: string; fareInfo: FareInfo[] };
+export type FormDataType = { fareInfo: FareInfo[] };
 export type FareProcessStatus = {
-  isEdit: boolean
-  isView: boolean
-  isInfoOpen: boolean
-}
+  isEdit: boolean;
+  isView: boolean;
+  isInfoOpen: boolean;
+};
 export type FareProcessStatusItem = {
-  [K in keyof FareProcessStatus]?: FareProcessStatus[K]
-}
+  [K in keyof FareProcessStatus]?: FareProcessStatus[K];
+};

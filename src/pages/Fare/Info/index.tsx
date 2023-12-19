@@ -1,16 +1,17 @@
-import { Drawer } from 'antd'
-import React, { FC } from 'react'
-import fareStore from '../store'
-import styles from './index.module.scss'
-import { observer } from 'mobx-react-lite'
-import envConfig from '@/config/env'
+import { Drawer } from "antd";
+import React, { FC } from "react";
+import fareStore from "../store";
+import styles from "./index.module.scss";
+import { observer } from "mobx-react-lite";
+import envConfig from "@/config/env";
 type Props = {
-  isOpen: boolean
-  onClose: () => void
-}
+  isOpen: boolean;
+  onClose: () => void;
+};
 const Info: FC<Props> = props => {
-  const { isOpen, onClose } = props
-  const { currentDate, getCurrentFaredhospital, getCurrentTotalMileage } = fareStore
+  const { isOpen, onClose } = props;
+  const { currentDate, getCurrentFaredhospital, getCurrentTotalMileage } =
+    fareStore;
   return (
     <Drawer
       title="本次报销详情"
@@ -44,9 +45,11 @@ const Info: FC<Props> = props => {
 
       <div>
         <p className={styles.title}>预估报销总油费</p>
-        <p className={styles.values}>{(getCurrentTotalMileage * envConfig.oilPrice).toFixed(2)}</p>
+        <p className={styles.values}>
+          {(getCurrentTotalMileage * envConfig.oilPrice).toFixed(2)}
+        </p>
       </div>
     </Drawer>
-  )
-}
-export default observer(Info)
+  );
+};
+export default observer(Info);
