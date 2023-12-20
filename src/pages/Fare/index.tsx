@@ -18,6 +18,7 @@ import fareAPI, { HospitalType } from "./apis";
 import historyAPI from "../History/apis";
 import { observer } from "mobx-react-lite";
 import globalStore from "@/shared/store/globalStore";
+import _ from "lodash";
 const Fare: FC = () => {
   const { setHospital, hospitales } = globalStore;
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
@@ -54,7 +55,10 @@ const Fare: FC = () => {
     const hospitalInfo = value?.fareInfo
       ?.map(item => [item?.from?.[0], item?.to?.[0]])
       ?.flat(Infinity);
-    const newHospitals = hospitalInfo?.map(item => ({ name: item }));
+    const newHospitals = _.difference(
+      hospitalInfo,
+      hospitales?.map(item => item.value),
+    )?.map(item => ({ name: item }));
     const hospitals = await fareAPI.updateHospital(newHospitals);
     if (hospitals?.length > 0) {
       storeHospitals(hospitals);
