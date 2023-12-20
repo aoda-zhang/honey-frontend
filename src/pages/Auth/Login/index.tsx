@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Button, Form, Input } from "antd";
 import lover from "@/shared/assets/images/glove.png";
 import style from "./index.module.scss";
@@ -8,18 +8,22 @@ import storage from "@/shared/utils/storage";
 import authAPI from "../apis";
 const Login: FC = () => {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
   const onLogin = async (value: Omit<AuthFieldType, "phoneNumber">) => {
-    try {
-      const loginInfo = await authAPI.login({
+    setIsLogin(true);
+    authAPI
+      .login({
         userName: value?.userName,
         password: value?.password,
+      })
+      .then(loginInfo => {
+        storage.set("access-token", loginInfo.accessToken);
+        storage.set("refreshToken", loginInfo.refreshToken);
+        navigate("/fare");
+      })
+      .finally(() => {
+        setIsLogin(false);
       });
-      await storage.set("access-token", loginInfo.accessToken);
-      await storage.set("refreshToken", loginInfo.refreshToken);
-      navigate("/fare");
-    } catch (error) {
-      console.error(`登陆出错:${error}`);
-    }
   };
   return (
     <div className={style.login}>
@@ -28,7 +32,7 @@ const Login: FC = () => {
         className={style.form}
         name="login"
         onFinish={onLogin}
-        autoComplete="off"
+        autoComplete="on"
       >
         <Form.Item<AuthFieldType>
           name="userName"
@@ -45,7 +49,12 @@ const Login: FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" className={style.submitBtn}>
+          <Button
+            loading={isLogin}
+            type="primary"
+            htmlType="submit"
+            className={style.submitBtn}
+          >
             登录
           </Button>
         </Form.Item>
