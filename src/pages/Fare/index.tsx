@@ -23,7 +23,7 @@ const Fare: FC = () => {
   const { setHospital, hospitales } = globalStore;
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
     fareStore;
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const addHistory = (value: FormValue) => {
     const fareHistory = value?.fareInfo?.map(item => ({
@@ -68,6 +68,7 @@ const Fare: FC = () => {
 
   useEffect(() => {
     if (hospitales?.length === 0) {
+      setLoading(true);
       fareAPI
         .getHospitalList()
         .then(data => {
