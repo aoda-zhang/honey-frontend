@@ -17,9 +17,11 @@ const Login: FC = () => {
         password: value?.password,
       })
       .then(loginInfo => {
-        storage.set("access-token", loginInfo.accessToken);
-        storage.set("refreshToken", loginInfo.refreshToken);
-        navigate("/fare");
+        if (loginInfo?.accessToken && loginInfo?.refreshToken) {
+          storage.set("access-token", loginInfo?.accessToken);
+          storage.set("refreshToken", loginInfo?.refreshToken);
+          navigate("/fare");
+        }
       })
       .finally(() => {
         setIsLogin(false);

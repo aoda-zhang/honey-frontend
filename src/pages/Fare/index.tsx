@@ -62,6 +62,7 @@ const Fare: FC = () => {
     const hospitals = await fareAPI.updateHospital(newHospitals);
     if (hospitals?.length > 0) {
       storeHospitals(hospitals);
+      addHistory(value);
       message.success("医院信息已更新");
     }
   };
@@ -101,7 +102,6 @@ const Fare: FC = () => {
       (c, b) => +dayjs(b.startTime)?.valueOf() - +dayjs(c.startTime)?.valueOf(),
     );
     if (fareInfo?.length > 0) {
-      addHistory(value);
       updateHospital(value);
       setForm(fareInfo);
       setDate(value?.spendDate);
