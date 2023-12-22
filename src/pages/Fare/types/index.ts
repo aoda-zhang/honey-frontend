@@ -27,7 +27,7 @@ export type HospitalOption = {
 export type FormValue = { spendDate: string; fareInfo: FareInfo[] };
 export type FormDataType = { fareInfo: FareInfo[] };
 export type FareProcessStatus = {
-  isEdit: boolean;
+  isEdit: boolean | null;
   isView: boolean;
   isInfoOpen: boolean;
 };

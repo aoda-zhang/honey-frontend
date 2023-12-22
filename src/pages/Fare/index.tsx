@@ -19,12 +19,37 @@ import historyAPI from "../History/apis";
 import { observer } from "mobx-react-lite";
 import globalStore from "@/shared/store/globalStore";
 import _ from "lodash";
+import useOnPull from "@/shared/hooks/useOnPull";
+import useDoubleClick from "@/shared/hooks/useDoubleClick";
 const Fare: FC = () => {
   const { setHospital, hospitales } = globalStore;
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
     fareStore;
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const storeHospitals = useCallback(
+    (data: HospitalType[]) => {
+      const hospitalList = data?.map(item => ({
+        label: item?.name,
+        value: item?.name,
+      }));
+      if (hospitalList?.length > 0) {
+        setHospital(hospitalList);
+      }
+    },
+    [setHospital],
+  );
+  const fetchData = useCallback(() => {
+    setLoading(true);
+    fareAPI
+      .getHospitalList()
+      .then(data => {
+        storeHospitals(data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [storeHospitals]);
   const addHistory = (value: FormValue) => {
     const fareHistory = value?.fareInfo?.map(item => ({
       ...item,
@@ -38,18 +63,10 @@ const Fare: FC = () => {
         message.success(`${value?.spendDate}报销已保存`);
       });
   };
-  const storeHospitals = useCallback(
-    (data: HospitalType[]) => {
-      const hospitalList = data?.map(item => ({
-        label: item?.name,
-        value: item?.name,
-      }));
-      if (hospitalList?.length > 0) {
-        setHospital(hospitalList);
-      }
-    },
-    [setHospital],
-  );
+  useOnPull(fetchData);
+  useDoubleClick(() => {
+    console.log("双击两次");
+  });
 
   const updateHospital = async (value: FormValue) => {
     const hospitalInfo = value?.fareInfo
@@ -68,18 +85,8 @@ const Fare: FC = () => {
   };
 
   useEffect(() => {
-    if (hospitales?.length === 0) {
-      setLoading(true);
-      fareAPI
-        .getHospitalList()
-        .then(data => {
-          storeHospitals(data);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [hospitales?.length, storeHospitals]);
+    fetchData();
+  }, [fetchData]);
 
   const onFinish = (value: FormValue) => {
     const formData = value?.fareInfo?.map(item => {
@@ -115,7 +122,7 @@ const Fare: FC = () => {
     <div className={styles.fare}>
       <Spin size="large" spinning={isLoading} tip="医院获取中......">
         <Form name="basic" onFinish={onFinish} autoComplete="true" form={form}>
-          {fareStatus.isEdit && (
+          {fareStatus?.isEdit && (
             <Form.Item
               label="本次报销月份"
               name="spendDate"
@@ -126,36 +133,29 @@ const Fare: FC = () => {
             </Form.Item>
           )}
 
-          {fareStatus.isEdit && <BusinessMap />}
-          {fareStatus.isView && <PreviewMap />}
+          {fareStatus?.isEdit && <BusinessMap />}
+          {fareStatus?.isView && <PreviewMap />}
           <div className={styles.buttons}>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                {PageStatus.View}
-              </Button>
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setFareStatus({
-                    isInfoOpen: true,
-                  });
-                }}
-              >
-                {PageStatus.Info}
-              </Button>
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setFareStatus({ isEdit: true, isView: false });
-                }}
-              >
-                {PageStatus.Edit}
-              </Button>
-            </Form.Item>
+            {fareStatus?.isEdit && (
+              <Form.Item>
+                <Button type="primary" htmlType="submit" size="large">
+                  {PageStatus.View}
+                </Button>
+              </Form.Item>
+            )}
+            {fareStatus?.isView && (
+              <Form.Item>
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => {
+                    setFareStatus({ isEdit: true, isView: false });
+                  }}
+                >
+                  {PageStatus.Edit}
+                </Button>
+              </Form.Item>
+            )}
           </div>
         </Form>
         <Info

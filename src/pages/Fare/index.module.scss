@@ -4,9 +4,13 @@
     margin: 1.08rem;
   }
   .buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1.54rem;
+    box-sizing: border-box;
+    padding: 0.77rem;
+    // 仅在移动端和ipad下支持的样式
+    @include medias($s) {
+      :global(.ant-btn) {
+        width: 100%;
+      }
+    }
   }
 }

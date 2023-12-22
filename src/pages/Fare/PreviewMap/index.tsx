@@ -5,6 +5,17 @@ import { observer } from "mobx-react-lite";
 import fareStore from "../store";
 const PreviewMap: FC = () => {
   const { formData } = fareStore;
+  const getSpendTime = (spendTime: number) => {
+    let randomNumber = Math.floor(Math.random() * 59) + 1;
+    if (randomNumber < 10) {
+      randomNumber = Number(`0${randomNumber}`);
+    }
+    return `${spendTime}:${randomNumber}`;
+  };
+  const getAllMileage = (allMileage: number) => {
+    const randomNumber = Math.floor(Math.random() * 10);
+    return `${allMileage}.${randomNumber}`;
+  };
   return (
     <div className={styles.previewMap}>
       <div className={styles.content} id="ZYR">
@@ -33,13 +44,17 @@ const PreviewMap: FC = () => {
             <div className={styles.spendTime}>
               <span className={styles.column}>
                 <span>
-                  <span className={styles.value}>{item?.allMileage}</span>
+                  <span className={styles.value}>
+                    {getAllMileage(item?.allMileage)}
+                  </span>
                   <span className={styles.unit}>km</span>
                 </span>
                 <span>导航里程</span>
               </span>
               <span className={styles.column}>
-                <span className={styles.value}>{item?.spendTime}</span>
+                <span className={styles.value}>
+                  {getSpendTime(item?.spendTime)}
+                </span>
                 <span>驾驶时长</span>
               </span>
               <span className={styles.column}>

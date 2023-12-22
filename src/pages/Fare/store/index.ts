@@ -38,7 +38,7 @@ class FareStore {
       if (!isNaN(value)) {
         pre += value;
       }
-      return pre;
+      return Math.round(pre);
     }, 0);
   }
 
