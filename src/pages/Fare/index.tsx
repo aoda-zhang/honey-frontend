@@ -65,7 +65,7 @@ const Fare: FC = () => {
   };
   useOnPull(fetchData);
   useDoubleClick(() => {
-    console.log("双击两次");
+    setFareStatus({ isInfoOpen: true });
   });
 
   const updateHospital = async (value: FormValue) => {
