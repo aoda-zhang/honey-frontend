@@ -1,10 +1,9 @@
 import React, { FC } from "react";
 import styles from "./index.module.scss";
 import carIcon from "@/shared/assets/images/car.png";
-import { observer } from "mobx-react-lite";
 import fareStore from "../store";
 const PreviewMap: FC = () => {
-  const { formData } = fareStore;
+  const { formData } = fareStore();
   const getSpendTime = (spendTime: number) => {
     let randomNumber = Math.floor(Math.random() * 59) + 1;
     if (randomNumber < 10) {
@@ -86,4 +85,4 @@ const PreviewMap: FC = () => {
   );
 };
 
-export default observer(PreviewMap);
+export default PreviewMap;

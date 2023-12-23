@@ -16,15 +16,14 @@ import fareStore from "./store";
 import Info from "./Info";
 import fareAPI, { HospitalType } from "./apis";
 import historyAPI from "../History/apis";
-import { observer } from "mobx-react-lite";
 import globalStore from "@/shared/store/globalStore";
 import _ from "lodash";
 import useOnPull from "@/shared/hooks/useOnPull";
 import useDoubleClick from "@/shared/hooks/useDoubleClick";
 const Fare: FC = () => {
-  const { setHospital, hospitales } = globalStore;
+  const { setHospital, hospitales } = globalStore();
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
-    fareStore;
+    fareStore();
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const storeHospitals = useCallback(
@@ -168,4 +167,4 @@ const Fare: FC = () => {
     </div>
   );
 };
-export default observer(Fare);
+export default Fare;

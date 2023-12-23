@@ -1,65 +1,39 @@
-import { makeAutoObservable } from "mobx";
+import { create } from "zustand";
 import { FareInfo, FareProcessStatus, FareProcessStatusItem } from "../types";
-import _ from "lodash";
-
-class FareStore {
-  faredData: FareInfo[] = [];
-
-  formData: FareInfo[] = [];
-
-  faredDate: string[] = [];
-
+interface FareState {
+  faredData: FareInfo[];
+  formData: FareInfo[];
+  faredDate: string[];
   currentDate: string;
+  repeathospital: string[];
+  fareStatus: FareProcessStatus;
+  setForm: (data: any[]) => void;
+  setDate: (date: string) => void;
+  setCurrentDate: (date: string) => void;
+  setFareStatus: (fareStatusItem: FareProcessStatusItem) => void;
+}
 
-  repeathospital: string[] = [];
-
-  fareStatus: FareProcessStatus = {
+const FareStore = create<FareState>(set => ({
+  faredData: [],
+  formData: [],
+  faredDate: [],
+  currentDate: "",
+  repeathospital: [],
+  fareStatus: {
     isEdit: true,
     isView: false,
     isInfoOpen: false,
-  };
+  },
+  setForm: (data = []) =>
+    set(state => ({
+      faredData: [state.faredData, ...data],
+      formData: [...data],
+    })),
+  setDate: (date: string) =>
+    set(state => ({ faredDate: [...state.faredDate, date] })),
+  setCurrentDate: (date: string) => set(() => ({ currentDate: date })),
+  setFareStatus: (fareStatusItem: FareProcessStatusItem) =>
+    set(state => ({ fareStatus: { ...state.fareStatus, ...fareStatusItem } })),
+}));
 
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  setForm = (data = []) => {
-    this.faredData = [...this.faredData, ...data];
-    this.formData = [...data];
-  };
-
-  get getCurrentFaredhospital() {
-    return this.formData?.map(item => item?.to) ?? [];
-  }
-
-  get getCurrentTotalMileage() {
-    return this.formData?.reduce((pre, item) => {
-      const value = parseFloat(String(item?.allMileage));
-      if (!isNaN(value)) {
-        pre += value;
-      }
-      return Math.round(pre);
-    }, 0);
-  }
-
-  get getRepeathospital(): FareInfo[] {
-    return _.filter(this.faredData, (value, index, iteratee) => {
-      const grouped = _.groupBy(iteratee, "to");
-      return grouped[value?.to]?.length > 1;
-    });
-  }
-
-  setDate = (date: string) => {
-    this.faredDate = [...this.faredDate, date];
-  };
-
-  setCurrentDate = (date: string) => {
-    this.currentDate = date;
-  };
-
-  setFareStatus = (fareStatusItem: FareProcessStatusItem) => {
-    this.fareStatus = { ...this.fareStatus, ...fareStatusItem };
-  };
-}
-const fareStore = new FareStore();
-export default fareStore;
+export default FareStore;

@@ -1,15 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button, Form, Input, Select, Space } from "antd";
 import "dayjs/locale/zh-cn";
 import styles from "./index.module.scss";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { observer } from "mobx-react-lite";
 import globalStore from "@/shared/store/globalStore";
 import fareStore from "../store";
 
 const BusinessMap: React.FC = () => {
-  const { hospitales } = globalStore;
-  const { setFareStatus, fareStatus } = fareStore;
+  const { hospitales } = globalStore();
+  const { setFareStatus, fareStatus } = fareStore();
   return (
     <div className={styles.form}>
       <Form.List name="fareInfo">
@@ -112,4 +111,4 @@ const BusinessMap: React.FC = () => {
   );
 };
 
-export default observer(BusinessMap);
+export default memo(BusinessMap);

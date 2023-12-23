@@ -1,14 +1,15 @@
-import { makeAutoObservable } from "mobx";
-class GlobalStore {
-  hospitales = [];
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  setHospital = data => {
-    this.hospitales = data;
-  };
+import { create } from "zustand";
+type HospitalItem = {
+  label: string;
+  value: string;
+};
+interface FareState {
+  hospitales: HospitalItem[];
+  setHospital: (data: any[]) => void;
 }
-const globalStore = new GlobalStore();
+
+const globalStore = create<FareState>(set => ({
+  hospitales: [],
+  setHospital: (data = []) => set(() => ({ hospitales: [...data] })),
+}));
 export default globalStore;
