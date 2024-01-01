@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 const History: FC = () => {
   return <>History</>;
 };
-export default History;
+export default memo(History);

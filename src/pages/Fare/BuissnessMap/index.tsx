@@ -7,8 +7,17 @@ import globalStore from "@/shared/store/globalStore";
 import fareStore from "../store";
 
 const BusinessMap: React.FC = () => {
-  const { hospitales } = globalStore();
+  const { hospitales, setHospital } = globalStore();
   const { setFareStatus, fareStatus } = fareStore();
+  const onSelectedHospital = (value: string) => {
+    const newHospitalItem = [
+      {
+        label: value,
+        value,
+      },
+    ];
+    setHospital(newHospitalItem);
+  };
   return (
     <div className={styles.form}>
       <Form.List name="fareInfo">
@@ -49,6 +58,9 @@ const BusinessMap: React.FC = () => {
                       placeholder="请选择出发医院"
                       optionFilterProp="children"
                       options={hospitales}
+                      onSelect={(value: string) => {
+                        onSelectedHospital(value);
+                      }}
                     />
                   </Form.Item>
                   <Form.Item

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import _ from "lodash";
 type HospitalItem = {
   label: string;
   value: string;
@@ -10,6 +11,9 @@ interface FareState {
 
 const globalStore = create<FareState>(set => ({
   hospitales: [],
-  setHospital: (data = []) => set(() => ({ hospitales: [...data] })),
+  setHospital: (data = []) =>
+    set(state => ({
+      hospitales: _.uniqBy([...state.hospitales, ...data], "value"),
+    })),
 }));
 export default globalStore;

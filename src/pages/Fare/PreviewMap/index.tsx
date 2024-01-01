@@ -1,15 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styles from "./index.module.scss";
 import carIcon from "@/shared/assets/images/car.png";
 import fareStore from "../store";
 const PreviewMap: FC = () => {
   const { formData } = fareStore();
   const getSpendTime = (spendTime: number) => {
-    let randomNumber = Math.floor(Math.random() * 59) + 1;
-    if (randomNumber < 10) {
-      randomNumber = Number(`0${randomNumber}`);
-    }
-    return `${spendTime}:${randomNumber}`;
+    const randomNumber = Math.floor(Math.random() * 60);
+    const formattedNumber = randomNumber.toString().padStart(2, "0");
+    return `${spendTime}:${formattedNumber}`;
   };
   const getAllMileage = (allMileage: number) => {
     const randomNumber = Math.floor(Math.random() * 10);
@@ -85,4 +83,4 @@ const PreviewMap: FC = () => {
   );
 };
 
-export default PreviewMap;
+export default memo(PreviewMap);
