@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styles from "./index.module.scss";
 import carIcon from "@/shared/assets/images/car.png";
 import fareStore from "../store";
@@ -83,4 +83,4 @@ const PreviewMap: FC = () => {
   );
 };
 
-export default PreviewMap;
+export default memo(PreviewMap);
