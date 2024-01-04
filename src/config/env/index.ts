@@ -6,9 +6,6 @@ interface EnvType {
   baseURL: string;
   commonErrorMessage: string;
   colorPrimary: string;
-  apiKey: {
-    bussiness: string;
-  };
   oilPrice: string;
 }
 const getEnvFiles = (): EnvType => {
