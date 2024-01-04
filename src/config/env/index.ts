@@ -1,23 +1,24 @@
-const currentEnv = process.env?.NODE_ENV ?? "develop";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-interface envType {
+import developEnv from "./develop";
+import productionEnv from "./production";
+const environment = import.meta.env;
+const currentEnv = environment?.MODE ?? "develop";
+interface EnvType {
   baseURL: string;
   commonErrorMessage: string;
-  welcomeMessage: string;
-  auth: {
-    inputAuthCode: string;
-    authCode: string;
-    noAuthMessage: string;
-    secritySaltCode: string;
-  };
-  inputAuthCode: string;
   colorPrimary: string;
-  authCode: string;
-  noAuthMessage: string;
   apiKey: {
     bussiness: string;
   };
-  oilPrice: number;
+  oilPrice: string;
 }
-const envConfig: envType = require(`./${currentEnv}`);
-export default envConfig;
+const getEnvFiles = (): EnvType => {
+  switch (currentEnv) {
+    case "develop":
+      return developEnv;
+    case "production":
+      return productionEnv;
+    default:
+      return developEnv;
+  }
+};
+export default getEnvFiles();

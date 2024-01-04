@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ConfigProvider } from "antd";
@@ -10,8 +10,9 @@ const theme = {
     colorPrimary: envConfig?.colorPrimary,
   },
 };
-
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <Router>
       <ConfigProvider theme={theme}>
@@ -19,5 +20,4 @@ ReactDOM.render(
       </ConfigProvider>
     </Router>
   </React.StrictMode>,
-  document.getElementById("root"),
 );

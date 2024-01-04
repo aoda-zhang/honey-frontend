@@ -3,6 +3,7 @@ import React, { FC, memo } from "react";
 import fareStore from "../store";
 import styles from "./index.module.scss";
 import envConfig from "@/config/env";
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
@@ -56,7 +57,7 @@ const Info: FC<Props> = props => {
       <div>
         <p className={styles.title}>预估报销总油费</p>
         <p className={styles.values}>
-          {(getCurrentTotalMileage() * envConfig.oilPrice).toFixed(2)}
+          {(getCurrentTotalMileage() * Number(envConfig?.oilPrice)).toFixed(2)}
         </p>
       </div>
     </Drawer>

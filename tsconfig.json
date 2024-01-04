@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "experimentalDecorators": true,
     "allowJs": true,
@@ -18,9 +18,12 @@
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-    }
+      "@/*": ["src/*"]
+    },
+    "composite": true,
+    "types": ["node", "vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.js","src/**/*.jsx"],
+  "include": ["src"],
   "exclude": ["node_modules", "src/**/*.spec.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
