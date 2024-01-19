@@ -121,3 +121,4 @@ dist
 .DS_Store
 
 src/setupProxy.js
+tsconfig.tsbuildinfo
