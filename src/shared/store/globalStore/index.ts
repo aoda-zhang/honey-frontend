@@ -4,12 +4,11 @@ type HospitalItem = {
   label: string;
   value: string;
 };
-interface FareState {
-  hospitales: HospitalItem[];
+type GlobalStage = { hospitales: HospitalItem[] };
+type GlobalAction = {
   setHospital: (data: any[]) => void;
-}
-
-const globalStore = create<FareState>(set => ({
+};
+const globalStore = create<GlobalStage & GlobalAction>(set => ({
   hospitales: [],
   setHospital: (data = []) =>
     set(state => ({
