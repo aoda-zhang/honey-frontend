@@ -7,7 +7,7 @@ import globalStore from "@/shared/store/globalStore";
 import fareStore from "../store";
 
 const BusinessMap: React.FC = () => {
-  const { hospitales, setHospital } = globalStore();
+  const { hospitals, setHospital } = globalStore();
   const { setFareStatus, fareStatus } = fareStore();
   const onSelectedHospital = (value: string) => {
     const newHospitalItem = [
@@ -57,7 +57,7 @@ const BusinessMap: React.FC = () => {
                       mode="tags"
                       placeholder="请选择出发医院"
                       optionFilterProp="children"
-                      options={hospitales}
+                      options={hospitals}
                       onSelect={(value: string) => {
                         onSelectedHospital(value);
                       }}
@@ -81,7 +81,7 @@ const BusinessMap: React.FC = () => {
                       mode="tags"
                       placeholder="请选择到达医院"
                       optionFilterProp="children"
-                      options={hospitales}
+                      options={hospitals}
                     />
                   </Form.Item>
                   <Form.Item

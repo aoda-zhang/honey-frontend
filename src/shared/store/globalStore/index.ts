@@ -4,15 +4,15 @@ type HospitalItem = {
   label: string;
   value: string;
 };
-type GlobalStage = { hospitales: HospitalItem[] };
+type GlobalStage = { hospitals: HospitalItem[] };
 type GlobalAction = {
   setHospital: (data: any[]) => void;
 };
 const globalStore = create<GlobalStage & GlobalAction>(set => ({
-  hospitales: [],
+  hospitals: [],
   setHospital: (data = []) =>
     set(state => ({
-      hospitales: _.uniqBy([...state.hospitales, ...data], "value"),
+      hospitals: _.uniqBy([...state.hospitals, ...data], "value"),
     })),
 }));
 export default globalStore;

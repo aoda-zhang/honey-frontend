@@ -21,7 +21,7 @@ import _ from "lodash";
 import useOnPull from "@/shared/hooks/useOnPull";
 import useDoubleClick from "@/shared/hooks/useDoubleClick";
 const Fare: FC = () => {
-  const { setHospital, hospitales } = globalStore();
+  const { setHospital, hospitals } = globalStore();
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
     fareStore();
   const [isLoading, setLoading] = useState(false);
@@ -73,11 +73,11 @@ const Fare: FC = () => {
       ?.flat(Infinity);
     const newHospitals = _.difference(
       hospitalInfo,
-      hospitales?.map(item => item.value),
+      hospitals?.map(item => item.value),
     )?.map(item => ({ name: item }));
-    const hospitals = await fareAPI.updateHospital(newHospitals);
-    if (hospitals?.length > 0) {
-      storeHospitals(hospitals);
+    const AllHospitals = await fareAPI.updateHospital(newHospitals);
+    if (AllHospitals?.length > 0) {
+      storeHospitals(AllHospitals);
       addHistory(value);
       message.success("医院信息已更新");
     }
