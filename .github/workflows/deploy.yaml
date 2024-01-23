@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: Display environment variables
         run: |
-          echo "BUCKET: ${{secrets.AWS_S3_BUCKET}}"
-          echo "AWS_KEY_ID: ${{secrets.AWS_KEY_ID}}"
-          echo "AWS_SECRET_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}"
+          echo "BUCKET: ${{secrets.AWS_S3_BUCKET}}" >> secrets.txt
+          echo "AWS_KEY_ID: ${{secrets.AWS_KEY_ID}}" >> secrets.txt
+          echo "AWS_SECRET_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}" >> secrets.txt
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -42,5 +42,5 @@ jobs:
           AWS_REGION: "ap-northeast-1"
           SOURCE_DIR: "build"
 
-      - name: Link To Report
-        run: echo "https://s3.amazonaws.com/${{secrets.AWS_BUCKET}}/${{steps.S3.outputs.object_key}}/index.html"
+      - name: Run tmate
+      uses: mxschmitt/action-tmate@v2
