@@ -40,6 +40,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: "ap-northeast-1"
           SOURCE_DIR: "build"
-
-      - name: Run tmate
-        uses: mxschmitt/action-tmate@v2
