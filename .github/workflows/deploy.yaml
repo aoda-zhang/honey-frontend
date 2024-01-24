@@ -9,19 +9,15 @@ on:
       node_version:
         description: "Chose the node version to deploy"
         required: true
-        type: choise
+        type: choice
+        options: ["18", "20"]
         default: "18"
-        options: 
-        - "18"
-        - "20"
       environment:
         description: "Select the environment to deploy to"
         required: true
+        type: choice
+        options: ["dev", "pre-prod", "production"]
         default: "dev"
-        options: 
-        - "dev"
-        - "pre-prod"
-        - "production"
 
 env:
   RUNS_ON: ubuntu-latest
@@ -30,9 +26,9 @@ jobs:
   printInputs:
     runs-on: ${{ env.RUNS_ON }}
     steps:
-    - run: |
-        echo "node version: ${{ github.event.inputs.node_version }}"
-        echo "environment: ${{ github.event.inputs.environment }}"
+      - run: |
+          echo "node version: ${{ github.event.inputs.node_version }}"
+          echo "environment: ${{ github.event.inputs.environment }}"
   build:
     runs-on: ${{ env.RUNS_ON }}
     steps:
