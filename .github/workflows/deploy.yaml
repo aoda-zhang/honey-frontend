@@ -2,9 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - develop
-      - master
+    branches: ["develop", "master"]
   workflow_dispatch:
     inputs:
       deploy_branch:
@@ -54,7 +52,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
-          name: $buildName
+          name: ${{ buildName }}
           path: build
 
   deploy:
@@ -65,7 +63,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: $buildName
+          name: ${{ buildName }}
       - name: deploy code
         uses: jakejarvis/s3-sync-action@master
         with:
