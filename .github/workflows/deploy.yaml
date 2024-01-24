@@ -24,8 +24,8 @@ on:
         options: ["dev", "pre-prod", "production"]
         default: "dev"
 
-  env:
-    buildName: "build-artifacts"
+env:
+  buildName: "build-artifacts"
 jobs:
   printInputs:
     runs-on: ubuntu-latest
