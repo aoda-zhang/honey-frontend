@@ -65,7 +65,7 @@ jobs:
         with:
           name: ${{ env.buildName }}
       - name: Display downloaded files
-       run: ls -R
+        run: ls -R
       - name: deploy files to aws
         uses: jakejarvis/s3-sync-action@master
         with:
