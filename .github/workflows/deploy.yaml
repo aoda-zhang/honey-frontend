@@ -7,7 +7,7 @@ on:
       - master
   workflow_dispatch:
     inputs:
-    deploy_branch:
+      deploy_branch:
         description: "The deploy branch"
         required: true
         type: choice
