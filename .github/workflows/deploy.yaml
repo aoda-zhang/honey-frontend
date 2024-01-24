@@ -5,7 +5,7 @@ on:
     branches:
       - master
   workflow_dispatch:
-    inputs:
+   inputs:
       node_version:
         description: "Chose the node version to deploy"
         required: true
