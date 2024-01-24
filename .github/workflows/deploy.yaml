@@ -1,23 +1,42 @@
-name: Deploy to AWS S3
+name: My Workflow
 
 on:
   push:
     branches:
-      - develop
+      - master
   workflow_dispatch:
+    inputs:
+      node_version:
+      description: "Chose the node version to deploy"
+        required: true
+        options: ["18", "20"]
+        default: "18"
+      environment:
+        description: "Select the environment to deploy to"
+        required: true
+        options: ["dev","pre-prod","production"]
+        default: "dev"
+
+env:
+  RUNS_ON: ubuntu-latest
 
 jobs:
-  deploy:
-    timeout-minutes: 120
-    runs-on: ubuntu-latest
+  printInputs:
+    runs-on: ${{ env.RUNS_ON }}
+    steps:
+    - run: |
+        echo "node version: ${{ github.event.inputs.node_version }}"
+        echo "environment: ${{ github.event.inputs.environment }}"
+  build:
+    runs-on: ${{ env.RUNS_ON }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@mater
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@mater
         with:
-          node-version: "18"
+          node-version: ${{ github.event.inputs.node_version }}
 
       - name: Install dependencies
         run: yarn
@@ -25,13 +44,14 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: deploy code
+  deploy:
+    runs-on: ${{ env.RUNS_ON }}
+
+    steps:
+      - name: Deploy to AWS S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: "${{ secrets.AWS_BUCKET }}"
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-1"
-          SOURCE_DIR: "build"
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_bucket: ${{ secrets.AWS_BUCKET }}
+          source_dir: build
