@@ -24,13 +24,13 @@ env:
 
 jobs:
   printInputs:
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
     steps:
       - run: |
           echo "node version: ${{ github.event.inputs.node_version }}"
           echo "environment: ${{ github.event.inputs.environment }}"
   build:
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
     steps:
       - name: Checkout code
         uses: actions/checkout@mater
@@ -38,16 +38,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@mater
         with:
-          node-version: ${{ github.event.inputs.node_version }}
+          node-version: ${{ github.event.inputs.node_version || "20" }}
 
-      - name: Install dependencies
-        run: yarn
-
-      - name: Build site
-        run: npm run build
+      - name: Install and Build
+        run: |
+        yarn && yarn run build
 
   deploy:
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
 
     steps:
       - name: Deploy to AWS S3
