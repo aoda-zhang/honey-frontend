@@ -7,7 +7,7 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      deploy_branch:
+    deploy_branch:
         description: "The deploy branch"
         required: true
         type: choice
@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "node version: ${{ github.event.inputs.node_version }}"
-          echo "environment: ${{ github.event.inputs.environment }}"
+          echo "node version: ${{ inputs.node_version }}"
+          echo "environment: ${{ inputs.environment }}"
   build:
     runs-on: ubuntu-latest
     steps:
