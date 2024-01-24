@@ -52,7 +52,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
-          name: ${{ buildName }}
+          name: ${{ env.buildName }}
           path: build
 
   deploy:
@@ -63,7 +63,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: ${{ buildName }}
+          name: ${{ env.buildName }}
       - name: deploy code
         uses: jakejarvis/s3-sync-action@master
         with:
