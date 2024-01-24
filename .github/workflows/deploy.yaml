@@ -33,16 +33,16 @@ jobs:
     runs-on: $RUNS_ON
     steps:
       - name: Checkout code
-        uses: actions/checkout@mater
+        uses: actions/checkout@master
 
-      - name: Set up Node.js
-        uses: actions/setup-node@mater
+      - name: Set Node version
+        uses: actions/setup-node@master
         with:
-          node-version: ${{ github.event.inputs.node_version || "20" }}
+          node-version: ${{ github.event.inputs.node_version }}
 
       - name: Install and Build
         run: |
-        yarn && yarn run build
+          yarn && yarn run build
 
   deploy:
     runs-on: $RUNS_ON
