@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       node_version:
-      description: "Chose the node version to deploy"
+        description: "Chose the node version to deploy"
         required: true
         options: ["18", "20"]
         default: "18"
