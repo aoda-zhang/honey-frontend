@@ -5,17 +5,23 @@ on:
     branches:
       - master
   workflow_dispatch:
-   inputs:
+    inputs:
       node_version:
         description: "Chose the node version to deploy"
         required: true
-        options: ["18", "20"]
+        type: choise
         default: "18"
+        options: 
+        - "18"
+        - "20"
       environment:
         description: "Select the environment to deploy to"
         required: true
-        options: ["dev","pre-prod","production"]
         default: "dev"
+        options: 
+        - "dev"
+        - "pre-prod"
+        - "production"
 
 env:
   RUNS_ON: ubuntu-latest
