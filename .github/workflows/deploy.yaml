@@ -1,16 +1,14 @@
-name: Deploy
+name: Deploy (No Production)
 
 on:
   push:
     branches: ["develop", "master"]
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.txt"
+      - "**/*.yaml"
   workflow_dispatch:
     inputs:
-      deploy_branch:
-        description: "The deploy branch"
-        required: true
-        type: choice
-        options: ["develop", "master"]
-        default: "develop"
       node_version:
         description: "The node version to deploy"
         required: true
@@ -23,9 +21,13 @@ on:
         type: choice
         options: ["dev", "pre-prod", "production"]
         default: "dev"
-
+  permissions:
+    security-events: write
+    actions: read
+    contents: read
 env:
   buildName: "build-artifacts"
+  codeScan_language: "javascript-typescript"
 jobs:
   printInputs:
     runs-on: ubuntu-latest
@@ -33,6 +35,15 @@ jobs:
       - run: |
           echo "node version: ${{ inputs.node_version }}"
           echo "environment: ${{ inputs.environment }}"
+
+  codeScan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code scan
+        uses: aoda-zhang/shared-deveops/blob/main/.github/workflows/code-scan.yaml
+        with:
+          codeScan_language: ${{ env.codeScan_language }}
+
   build:
     runs-on: ubuntu-latest
     steps:
