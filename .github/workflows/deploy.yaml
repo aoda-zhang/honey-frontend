@@ -21,7 +21,7 @@ on:
         type: choice
         options: ["dev", "pre-prod", "production"]
         default: "dev"
-  permissions:
+permissions:
     security-events: write
     actions: read
     contents: read
