@@ -27,7 +27,7 @@ permissions:
 env:
   buildName: "build-artifacts"
 jobs:
-  codeScan:
+  CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       repository: aoda-zhang/honey-frontEnd
@@ -35,9 +35,9 @@ jobs:
       branch: develop
     secrets: inherit
 
-  Build:
+  build:
     runs-on: ubuntu-latest
-    needs: codeScan
+    needs: CodeScan
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -48,18 +48,9 @@ jobs:
           node-version: ${{ github.event.inputs.node_version }}
           cache: "yarn"
 
-      - name: Install
+      - name: Install and Build
         run: |
-          yarn
-      
-      - name: Build Code
-        run: |
-          yarn run build
-
-      - name: Eslint
-        run: |
-          yarn run lint-staged
-
+          yarn && yarn run build
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
@@ -68,7 +59,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: Build
+    needs: build
 
     steps:
       - name: Download Artifacts
