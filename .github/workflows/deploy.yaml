@@ -26,13 +26,12 @@ permissions:
   contents: read
 env:
   buildName: "build-artifacts"
-  codeScan_language: "javascript-typescript"
 jobs:
   codeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       repository: aoda-zhang/honey-frontEnd
-      codeScan_language: ${{ env.codeScan_language }}
+      codeScan_language: javascript-typescript
       branch: develop
     secrets: inherit
 
