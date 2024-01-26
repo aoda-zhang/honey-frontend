@@ -29,7 +29,7 @@ env:
   codeScan_language: "javascript-typescript"
 jobs:
   codeScan:
-    uses: aoda-zhang/shared-devops/.github/workflows/code-scan.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       repository: aoda-zhang/honey-frontEnd
       codeScan_language: ${{ env.codeScan_language }}
