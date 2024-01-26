@@ -27,7 +27,7 @@ permissions:
 env:
   buildName: "build-artifacts"
 jobs:
-  codeScan:
+  CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       repository: aoda-zhang/honey-frontEnd
@@ -35,7 +35,7 @@ jobs:
       branch: develop
     secrets: inherit
 
-  build:
+  Install && Build && Eslint:
     runs-on: ubuntu-latest
     needs: codeScan
     steps:
@@ -60,7 +60,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: Install && Build && Eslint
 
     steps:
       - name: Download Artifacts
