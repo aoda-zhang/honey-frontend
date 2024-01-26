@@ -21,26 +21,20 @@ on:
         options: ["dev", "pre-prod", "production"]
         default: "dev"
 permissions:
-    security-events: write
-    actions: read
-    contents: read
+  security-events: write
+  actions: read
+  contents: read
 env:
   buildName: "build-artifacts"
   codeScan_language: "javascript-typescript"
 jobs:
-  printInputs:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "node version: ${{ inputs.node_version }}"
-          echo "environment: ${{ inputs.environment }}"
-
   codeScan:
     runs-on: ubuntu-latest
     steps:
       - name: code scan
-        uses: aoda-zhang/shared-devops/blob/main/.github/workflows/code-scan.yaml@master
+        uses: aoda-zhang/shared-devops/.github/workflows/code-scan.yaml@master
         with:
+          repository: aoda-zhang/honey-frontEnd
           codeScan_language: ${{ env.codeScan_language }}
 
   build:
