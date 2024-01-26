@@ -68,7 +68,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: Install && Build && Eslint
+    needs: Build
 
     steps:
       - name: Download Artifacts
