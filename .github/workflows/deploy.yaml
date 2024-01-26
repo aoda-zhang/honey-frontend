@@ -34,6 +34,7 @@ jobs:
       repository: aoda-zhang/honey-frontEnd
       codeScan_language: ${{ env.codeScan_language }}
       branch: develop
+    secrets: inherit
 
   build:
     runs-on: ubuntu-latest
