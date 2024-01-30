@@ -40,8 +40,8 @@ jobs:
     with:
       repository: aoda-zhang/shared-configs
       branch: "master || main"
-      config_path: "honey-frontEnd/dev"
-      current_env: "dev"
+      config_path: honey-frontEnd/dev
+      current_env: dev
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   build:
