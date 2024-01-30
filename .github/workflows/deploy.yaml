@@ -41,7 +41,6 @@ jobs:
       repository: aoda-zhang/shared-configs
       branch: "master || main"
       config_path: "honey-frontEnd/dev"
-      branch: develop
     secrets: inherit
 
   build:
