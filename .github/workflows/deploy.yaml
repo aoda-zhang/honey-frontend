@@ -56,7 +56,7 @@ jobs:
           # name: ${{ env.buildName }}
           name: "envFile"
 
-       - name: Copy all files to workspace
+      - name: Copy all files to workspace
         run: cp envFile/* $GITHUB_WORKSPACE
 
       - name: Display content of copied files
