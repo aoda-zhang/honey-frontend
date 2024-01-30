@@ -42,6 +42,7 @@ jobs:
       branch: "master || main"
       config_path: honey-frontEnd/dev
       current_env: dev
+    secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   build:
