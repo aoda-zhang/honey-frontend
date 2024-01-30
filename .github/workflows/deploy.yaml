@@ -35,12 +35,33 @@ jobs:
       branch: develop
     secrets: inherit
 
+  getEnvironmentFiles:
+    uses: aoda-zhang/shared-devops/.github/workflows/get_configs.yaml@master
+    with:
+      repository: aoda-zhang/shared-configs
+      branch: "master || main"
+      config_path: "honey-frontEnd/dev"
+      branch: develop
+    secrets: inherit
+
   build:
     runs-on: ubuntu-latest
     needs: codeScan
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@master
+        with:
+          # name: ${{ env.buildName }}
+          name: "envFile"
+
+       - name: Copy all files to workspace
+        run: cp envFile/* $GITHUB_WORKSPACE
+
+      - name: Display content of copied files
+        run: ls -la $GITHUB_WORKSPACE
 
       - name: Set Node version and Cache
         uses: actions/setup-node@master
