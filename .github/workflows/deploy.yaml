@@ -51,12 +51,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Display checkout code
+        run: ls -R
 
       - name: Download Artifacts
         uses: actions/download-artifact@master
         with:
           # name: ${{ env.buildName }}
           name: "envFile"
+
+       - name: Display downloaded files
+        run: ls -la $GITHUB_WORKSPACE
 
       - name: Copy all files to workspace
         run: cp envFile/* $GITHUB_WORKSPACE
