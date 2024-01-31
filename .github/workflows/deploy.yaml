@@ -18,7 +18,7 @@ on:
         description: "The environment to deploy"
         required: true
         type: choice
-        options: ["dev", "pre-prod", "production"]
+        options: ["dev", "test"]
         default: "dev"
 permissions:
   security-events: write
@@ -26,8 +26,9 @@ permissions:
   contents: read
 env:
   buildName: "build-artifacts"
+  artifactsName: "envFile"
 jobs:
-  codeScan:
+  CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       repository: aoda-zhang/honey-frontEnd
@@ -35,38 +36,27 @@ jobs:
       branch: develop
     secrets: inherit
 
-  getEnvironmentFiles:
+  GetEnvironmentFiles:
     uses: aoda-zhang/shared-devops/.github/workflows/get_configs.yaml@master
     with:
       repository: aoda-zhang/shared-configs
       branch: main
-      config_path: honey-frontEnd/dev
-      current_env: dev
+      config_path: honey-frontEnd/${{ inputs.environment }}
+      current_env: ${{ inputs.environment }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
-  build:
+  Build:
     runs-on: ubuntu-latest
     needs: codeScan
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Display checkout code
-        run: ls -R
 
-      - name: Download Artifacts
+      - name: download Environment files
         uses: actions/download-artifact@master
         with:
-          # name: ${{ env.buildName }}
-          name: "envFile"
-      - name: Display downloaded files
-        run: ls -la $GITHUB_WORKSPACE
-
-      - name: Copy all files to workspace
-        run: cp envFile/* $GITHUB_WORKSPACE
-
-      - name: Display content of copied files
-        run: ls -la $GITHUB_WORKSPACE
+          name: ${{ env.artifactsName }}
 
       - name: Set Node version and Cache
         uses: actions/setup-node@master
@@ -77,6 +67,7 @@ jobs:
       - name: Install and Build
         run: |
           yarn && yarn run build
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
@@ -85,7 +76,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: Build
 
     steps:
       - name: Download Artifacts
