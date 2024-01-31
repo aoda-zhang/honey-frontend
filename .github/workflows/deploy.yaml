@@ -39,11 +39,11 @@ jobs:
     uses: aoda-zhang/shared-devops/.github/workflows/get_configs.yaml@master
     with:
       repository: aoda-zhang/shared-configs
-      branch: "master || main"
-      config_path: "honey-frontEnd/dev"
-      current_env: "dev"
+      branch: main
+      config_path: honey-frontEnd/dev
+      current_env: dev
+    secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
-    secrets: inherit
 
   build:
     runs-on: ubuntu-latest
@@ -51,12 +51,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Display checkout code
+        run: ls -R
 
       - name: Download Artifacts
         uses: actions/download-artifact@master
         with:
           # name: ${{ env.buildName }}
           name: "envFile"
+
+       - name: Display downloaded files
+        run: ls -la $GITHUB_WORKSPACE
 
       - name: Copy all files to workspace
         run: cp envFile/* $GITHUB_WORKSPACE
