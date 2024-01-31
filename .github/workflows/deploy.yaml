@@ -59,8 +59,7 @@ jobs:
         with:
           # name: ${{ env.buildName }}
           name: "envFile"
-
-       - name: Display downloaded files
+      - name: Display downloaded files
         run: ls -la $GITHUB_WORKSPACE
 
       - name: Copy all files to workspace
