@@ -1,4 +1,4 @@
-name: name: Deploy to AWS S3 (No )
+name: Deploy to AWS S3 (NOT PROD)
 
 on:
   push:
