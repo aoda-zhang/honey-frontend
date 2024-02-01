@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthFieldType } from "../types";
 import storage from "@/shared/utils/storage";
 import authAPI from "../apis";
+const environment = import.meta.env;
 const Login: FC = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
@@ -67,7 +68,8 @@ const Login: FC = () => {
             navigate("/register");
           }}
         >
-          新用户注册
+          {environment.REACT_APP_TEST_NAME}
+          {/* 新用户注册 */}
         </span>
         <span>帮助</span>
       </div>
