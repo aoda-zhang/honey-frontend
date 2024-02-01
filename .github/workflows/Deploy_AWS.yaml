@@ -20,10 +20,16 @@ permissions:
   contents: read
 
 jobs:
+  CodeScan:
+    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+    with:
+      repository: ${{ github.repository }}
+    secrets: inherit
+
   Build:
     uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
     with:
-      app_repository: aoda-zhang/honey-frontEnd
+      app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
       currentEnv: ${{ inputs.environment }}
       build_name: build-artifacts
@@ -32,6 +38,7 @@ jobs:
 
   Deploy:
     uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
+    needs: Build
     with:
       build_name: build-artifacts
     secrets:
