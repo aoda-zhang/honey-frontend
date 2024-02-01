@@ -27,13 +27,15 @@ jobs:
     with:
       app_repository: aoda-zhang/honey-frontEnd
       config_folder: honey-frontEnd
-      currentEnv: ${{inputs.environment}}
-      build_name: ${{env.buildName}}
+      currentEnv: ${{ inputs.environment }}
+      build_name: ${{ env.buildName }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Deploy:
     uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
+    with:
+      build_name: ${{ env.buildName }}
     secrets:
       AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
