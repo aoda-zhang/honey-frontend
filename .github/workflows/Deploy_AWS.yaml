@@ -1,0 +1,40 @@
+name: Deploy (No Production)
+
+on:
+  push:
+    branches: [develop, master]
+    paths-ignore:
+      - "**/.github/**"
+      - "**/*.txt"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "The environment to deploy"
+        required: true
+        type: choice
+        options: [dev, test]
+        default: dev
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+env:
+  buildName: "build-artifacts"
+  artifactsName: "envFile"
+jobs:
+  Build:
+    uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
+    with:
+      app_repository: aoda-zhang/honey-frontEnd
+      config_folder: honey-frontEnd
+      currentEnv: ${{inputs.environment}}
+      build_name: ${{env.buildName}}
+    secrets:
+      PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
+
+  Deploy:
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
+    secrets:
+      AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
