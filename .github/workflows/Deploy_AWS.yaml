@@ -27,6 +27,7 @@ jobs:
     secrets: inherit
 
   Build:
+    needs: CodeScan
     uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
     with:
       app_repository: ${{ github.repository }}
@@ -37,8 +38,8 @@ jobs:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Deploy:
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
     needs: Build
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
     with:
       build_name: build-artifacts
     secrets:
