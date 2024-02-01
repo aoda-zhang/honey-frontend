@@ -19,8 +19,7 @@ permissions:
   actions: read
   contents: read
 env:
-  buildName: "build-artifacts"
-  artifactsName: "envFile"
+  buildName: build-artifacts
 jobs:
   Build:
     uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
