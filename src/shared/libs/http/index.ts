@@ -48,6 +48,7 @@ const interceptorsResSuccess = (response: AxiosResponse<HttpResponseType>) => {
   }
 };
 // 响应拦截处理
+// @ts-ignore
 Http.interceptors.response.use(interceptorsResSuccess, error => {
   httpErrorHandler(error?.response?.data);
   return Promise.reject(error);
