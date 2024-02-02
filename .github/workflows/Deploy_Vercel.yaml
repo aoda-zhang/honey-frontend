@@ -1,4 +1,4 @@
-name: Deploy to AWS S3 (NO PROD)
+name: Deploy to Vercel(NO PROD)
 
 on:
   push:
