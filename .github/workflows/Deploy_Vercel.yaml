@@ -40,7 +40,7 @@ jobs:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Build_and_Deploy_Dev:
-  needs: SetEnvironment
+    needs: SetEnvironment
     runs-on: ubuntu-latest
     steps:
       - name: show env
