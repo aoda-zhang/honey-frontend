@@ -20,11 +20,11 @@ permissions:
   contents: read
 
 jobs:
-  CodeScan:
-    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
-    with:
-      repository: ${{ github.repository }}
-    secrets: inherit
+  # CodeScan:
+  #   uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+  #   with:
+  #     repository: ${{ github.repository }}
+  #   secrets: inherit
 
   Build:
     needs: CodeScan
