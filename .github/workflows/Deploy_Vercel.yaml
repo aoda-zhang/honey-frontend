@@ -31,6 +31,7 @@ jobs:
     secrets: inherit
 
   SetEnvironment:
+    needs: CodeScan
     uses: aoda-zhang/shared-devops/.github/workflows/setEnvironment.yaml@master
     with:
       config_folder: honey-frontEnd
@@ -39,6 +40,7 @@ jobs:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Build_and_Deploy_Dev:
+  needs: SetEnvironment
     runs-on: ubuntu-latest
     steps:
       - name: show env
