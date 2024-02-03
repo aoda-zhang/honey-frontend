@@ -58,7 +58,9 @@ jobs:
         with:
           node-version: 18
           cache: yarn
-      - run: yarn install --immutable
-      - run: yarn vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
-      - run: yarn vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - run: yarn vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - run: |
+          yarn install --immutable
+          yarn global add vercel@latest
+          yarn vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+          yarn vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          yarn vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
