@@ -38,7 +38,7 @@ jobs:
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
-  Build & Deploy-Dev:
+  Build_and_Deploy_Dev:
     runs-on: ubuntu-latest
     steps:
       - name: show env
