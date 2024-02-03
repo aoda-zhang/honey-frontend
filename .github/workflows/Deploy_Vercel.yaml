@@ -19,6 +19,10 @@ permissions:
   actions: read
   contents: read
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_USER_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 jobs:
   CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
@@ -26,24 +30,31 @@ jobs:
       repository: ${{ github.repository }}
     secrets: inherit
 
-  Build:
+  SetEnvironment:
     needs: CodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/setEnvironment.yaml@master
     with:
-      app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
       currentEnv: ${{ inputs.environment }}
-      build_name: build-artifacts
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
-  Deploy:
-    needs: Build
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
-    with:
-      build_name: build-artifacts
-    secrets:
-      PAT: ${{ secrets.PAT }}
-      VERCEL_USER_ID: ${{ secrets.VERCEL_USER_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  Build_and_Deploy_Dev:
+    needs: SetEnvironment
+    runs-on: ubuntu-latest
+    steps:
+      - name: show env
+        run: cat $GITHUB_ENV
+      - name: Checkout business code
+        uses: actions/checkout@master
+
+      - name: Install
+        run: |
+          yarn
+          yarn global add vercel@latest
+
+      - name: Build Project
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

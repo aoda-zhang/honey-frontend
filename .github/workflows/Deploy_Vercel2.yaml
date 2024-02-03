@@ -1,0 +1,64 @@
+name: Deploy to Vercel2(NO PROD)
+
+on:
+  push:
+    branches: [develop, master]
+    paths-ignore:
+      - "**/.github/**"
+      - "**/*.txt"
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "The environment to deploy"
+        required: true
+        type: choice
+        options: [dev, test]
+        default: dev
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_USER_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  # CodeScan:
+  #   uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+  #   with:
+  #     repository: ${{ github.repository }}
+  #   secrets: inherit
+
+  setEnvironment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout environment configs
+        uses: actions/checkout@master
+        with:
+          # repository: ${{ inputs.config_repository }}
+          repository: aoda-zhang/shared-configs
+          # ref: ${{ inputs.config_branch }}
+          ref: main
+          token: ${{ secrets.PAT }}
+
+      - name: Set environment variables
+        run: |
+          cd honey-frontEnd/dev
+          echo "export $(grep -v '^#' .env | xargs -d '\n')" >> $GITHUB_ENV
+          cat $GITHUB_ENV
+        working-directory: ${{ github.workspace }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+      - run: yarn install --immutable
+      - run: yarn vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+      - run: yarn vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: yarn vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
