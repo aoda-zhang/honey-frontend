@@ -42,9 +42,9 @@ jobs:
     uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
     with:
       build_name: build-artifacts
-    secrets:
       app_repository: ${{ github.repository }}
       app_branch: develop
+    secrets:
       PAT: ${{ secrets.PAT }}
       VERCEL_USER_ID: ${{ secrets.VERCEL_USER_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
