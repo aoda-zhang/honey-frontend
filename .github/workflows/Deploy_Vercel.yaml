@@ -24,16 +24,16 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
-  VerifyCodeScan:
-    uses: aoda-zhang/shared-devops/.github/workflows/verify_code_scan.yaml@master
+  CodeScan:
+    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       app_repository: ${{ github.repository }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Build_Deploy:
-    needs: VerifyCodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
+    needs: CodeScan
+    uses: .github/workflows/deploy_vercel.yaml@master
     with:
       app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
