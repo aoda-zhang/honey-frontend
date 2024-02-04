@@ -85,5 +85,5 @@ jobs:
           yarn global add vercel@latest
           vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - run: ls -R
+          ls -R .
           vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
