@@ -64,6 +64,7 @@ jobs:
           ref: main
           token: ${{ secrets.PAT }}
           path: config
+      - run: ls lR
       - uses: actions/checkout@master
       - run: |
           cp -r ${{ github.workspace }}/config/honey-frontEnd/dev/. .
