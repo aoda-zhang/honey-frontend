@@ -41,7 +41,7 @@ jobs:
     needs: Build
     uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
     with:
-
+      build_name: build-artifacts
     secrets:
       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
