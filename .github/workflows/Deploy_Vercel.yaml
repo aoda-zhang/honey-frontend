@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - "**/.github/**"
       - "**/*.txt"
-  workflow_dispatch:
+  ƒflow_dispatch:
     inputs:
       environment:
         description: "The environment to deploy"
@@ -25,7 +25,7 @@ env:
 
 jobs:
   VerifyCodeScan:
-    uses: aoda-zhang/shared-devops/.github/actions/verify_code_scan.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/verify_code_scan.yaml@master
     with:
       repository: ${{ github.repository }}
     secrets:
@@ -34,7 +34,7 @@ jobs:
   Build_Deploy:
     needs: VerifyCodeScan
     runs-on: ubuntu-latest
-    uses: aoda-zhang/shared-devops/.github/actions/deploy_vercel.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
     with:
       app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
