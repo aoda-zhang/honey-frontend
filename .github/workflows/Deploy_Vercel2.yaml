@@ -30,9 +30,30 @@ jobs:
   #     repository: ${{ github.repository }}
   #   secrets: inherit
 
-  setEnvironment:
-    runs-on: ubuntu-latest
+  # setEnvironment:
+  #   runs-on: ubuntu-latest
 
+  #   steps:
+  #     - name: Checkout environment configs
+  #       uses: actions/checkout@master
+  #       with:
+  #         # repository: ${{ inputs.config_repository }}
+  #         repository: aoda-zhang/shared-configs
+  #         # ref: ${{ inputs.config_branch }}
+  #         ref: main
+  #         token: ${{ secrets.PAT }}
+  #         path: config
+
+  #     # - name: Set environment variables
+  #     #   run: |
+  #     #     cd honey-frontEnd/dev
+  #     #     echo "export $(grep -v '^#' .env | xargs -d '\n')" >> $GITHUB_ENV
+  #     #     cat $GITHUB_ENV
+  #     #   working-directory: ${{ github.workspace }}
+
+  deploy:
+    # needs: setEnvironment
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout environment configs
         uses: actions/checkout@master
@@ -42,19 +63,13 @@ jobs:
           # ref: ${{ inputs.config_branch }}
           ref: main
           token: ${{ secrets.PAT }}
-
-      - name: Set environment variables
-        run: |
-          cd honey-frontEnd/dev
-          echo "export $(grep -v '^#' .env | xargs -d '\n')" >> $GITHUB_ENV
-          cat $GITHUB_ENV
-        working-directory: ${{ github.workspace }}
-
-  deploy:
-    needs: setEnvironment
-    runs-on: ubuntu-latest
-    steps:
+          path: config
       - uses: actions/checkout@v3
+      - run: |
+          cp -r ${{ github.workspace }}/config/honey-frontEnd/dev/. .
+          mv app/* .
+          rm -r app
+          rm -r config
       - run: ls -R
       - uses: actions/setup-node@v3
         with:
@@ -65,4 +80,5 @@ jobs:
           yarn global add vercel@latest
           vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: ls -R
           vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
