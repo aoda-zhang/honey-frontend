@@ -27,7 +27,7 @@ jobs:
   VerifyCodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/verify_code_scan.yaml@master
     with:
-      repository: ${{ github.repository }}
+      app_repository: ${{ github.repository }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
