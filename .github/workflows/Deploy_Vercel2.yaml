@@ -64,18 +64,16 @@ jobs:
           ref: main
           token: ${{ secrets.PAT }}
           path: config
-      # - run: ls -R
       - uses: actions/checkout@master
         with:
           path: app
 
-      - run: cp -r ./config/honey-frontEnd/dev/. .
+      - run: cp -r ./config/honey-frontEnd/${{inputs.environment}}/. .
       - run: |
-          cp -r ./config/honey-frontEnd/dev/. .
+          cp -r ./config/honey-frontEnd/${{inputs.environment}}/. .
           mv app/* .
           rm -r app
           rm -r config
-      - run: ls -R .
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -85,4 +83,5 @@ jobs:
           yarn global add vercel@latest
           vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
           vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
           vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
