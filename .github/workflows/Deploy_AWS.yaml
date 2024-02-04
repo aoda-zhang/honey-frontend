@@ -21,14 +21,14 @@ permissions:
 
 jobs:
   CodeScan:
-    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+    uses: aoda-zhang/shared-devops/.github/actions/code_scan.yaml@master
     with:
       repository: ${{ github.repository }}
     secrets: inherit
 
   Build:
     needs: CodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
+    uses: aoda-zhang/shared-devops/.github/actions/shared_build.yaml@master
     with:
       app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
@@ -39,7 +39,7 @@ jobs:
 
   Deploy:
     needs: Build
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
+    uses: aoda-zhang/shared-devops/.github/actions/deploy_aws_s3.yaml@master
     with:
 
     secrets:

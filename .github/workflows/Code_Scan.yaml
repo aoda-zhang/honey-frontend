@@ -1,0 +1,19 @@
+name: Scan code
+description: There will auto scan code when push to develop branch
+on:
+  push:
+    branches: develop
+    paths-ignore:
+      - "**/.github/**"
+      - "**/*.txt"
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+
+jobs:
+  CodeScan:
+    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+    with:
+      repository: ${{ github.repository }}
+    secrets: inherit
