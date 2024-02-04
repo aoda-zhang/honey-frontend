@@ -2,7 +2,7 @@ name: Deploy to Vercel(NO PROD)
 
 on:
   push:
-    branches: [develop, master]
+    branches: develop
     paths-ignore:
       - "**/.github/**"
       - "**/*.txt"
