@@ -33,7 +33,6 @@ jobs:
 
   Build_Deploy:
     needs: VerifyCodeScan
-    runs-on: ubuntu-latest
     uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
     with:
       app_repository: ${{ github.repository }}
