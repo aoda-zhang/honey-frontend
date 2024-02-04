@@ -27,34 +27,15 @@ jobs:
   CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
-      repository: ${{ github.repository }}
-    secrets: inherit
+      app_repository: ${{ github.repository }}
 
-  SetEnvironment:
+  Build_Deploy:
     needs: CodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/setEnvironment.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
     with:
+      app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
       currentEnv: ${{ inputs.environment }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
-
-  Build_and_Deploy_Dev:
-    needs: SetEnvironment
-    runs-on: ubuntu-latest
-    steps:
-      - name: show env
-        run: cat $GITHUB_ENV
-      - name: Checkout business code
-        uses: actions/checkout@master
-
-      - name: Install
-        run: |
-          yarn
-          yarn global add vercel@latest
-
-      - name: Build Project
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy Project to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
