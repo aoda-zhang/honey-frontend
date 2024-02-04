@@ -38,3 +38,4 @@ jobs:
       currentEnv: ${{ inputs.environment }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
