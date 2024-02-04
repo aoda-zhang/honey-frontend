@@ -33,7 +33,7 @@ jobs:
 
   Build_Deploy:
     needs: CodeScan
-    uses: .github/workflows/deploy_vercel.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
     with:
       app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
