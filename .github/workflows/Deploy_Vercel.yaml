@@ -28,8 +28,6 @@ jobs:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
       app_repository: ${{ github.repository }}
-    secrets:
-      PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
   Build_Deploy:
     needs: CodeScan
