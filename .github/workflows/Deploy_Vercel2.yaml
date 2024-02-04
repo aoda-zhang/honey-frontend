@@ -66,9 +66,12 @@ jobs:
           path: config
       # - run: ls -R
       - uses: actions/checkout@master
+          with: app
+
       # - run: echo "Current working directory: $(pwd)"
       - run: pwd
-      - run: ls -R ${{ github.workspace }}/config/honey-frontEnd/
+      - run: ls -R ${{ github.workspace }}/config
+      - run: ls -R ${{ github.workspace }}/app
 
       - run: ls -R .
       - run: cp -r ./config/honey-frontEnd/dev/. .
