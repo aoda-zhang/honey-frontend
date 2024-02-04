@@ -66,9 +66,9 @@ jobs:
           path: config
       - run: ls -R
       - uses: actions/checkout@master
-      - run: ls -R ${{ github.workspace }}/config/honey-frontEnd/dev/
+      - run: ls -R ./config/honey-frontEnd/dev/
       - run: ls -R .
-      - run: cp -r ${{ github.workspace }}/config/honey-frontEnd/dev/. .
+      - run: cp -r ./config/honey-frontEnd/dev/. .
       - run: ls -R .
       - uses: actions/setup-node@v3
         with:
