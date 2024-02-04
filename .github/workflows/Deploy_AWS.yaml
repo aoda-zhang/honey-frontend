@@ -23,7 +23,7 @@ jobs:
   CodeScan:
     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
     with:
-      repository: ${{ github.repository }}
+      app_repository: ${{ github.repository }}
     secrets: inherit
 
   Build:
