@@ -75,13 +75,12 @@ const Fare: FC = () => {
   const updateHospitals = async (value: FormValue) => {
     const fullHospitals = value?.fareInfo
       ?.map(item => [item?.from?.[0], item?.to?.[0]])
-      ?.flat(Infinity)
-      ?.map(_item => ({ name: _item }));
-    const AllHospitals = await fareAPI.updateHospital(fullHospitals);
-    if (AllHospitals?.length > 0) {
-      storeHospitals(AllHospitals);
-      addHistory(value);
-      message.success("医院信息已更新");
+      ?.flat(Infinity);
+    const insertAccount = await fareAPI.addHospitals(fullHospitals);
+    message.success(`新增${insertAccount}条医院数据`);
+    addHistory(value);
+    if (insertAccount > 0) {
+      fetchData();
     }
   };
 

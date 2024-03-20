@@ -8,11 +8,8 @@ class FareAPI {
     return httpService.getAPI<HospitalType[]>("/hospital/list");
   };
 
-  updateHospital = (hospitals: any[]) => {
-    return httpService.postAPI<HospitalType[]>(
-      "/hospital/update/?:id",
-      hospitals,
-    );
+  addHospitals = (hospitals: unknown[]) => {
+    return httpService.postAPI<number>("/hospital/add", hospitals);
   };
 }
 const fareAPI = new FareAPI();

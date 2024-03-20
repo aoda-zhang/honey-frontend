@@ -5,7 +5,13 @@
       "setting": "setting"
     },
     "fee": {
-      "title": "费用"
+      "title": "fee",
+      "allMileage": "allMileage",
+      "spendTime": "spendTime",
+      "average": "average speed",
+      "maxSpend": "max speed",
+      "expectedOil": "expected oil",
+      "with": "just run"
     },
     "login": {
       "primary_login": "Login"
