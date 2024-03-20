@@ -1,0 +1,20 @@
+{
+  "translation": {
+    "common": {
+      "test": "test",
+      "setting": "setting"
+    },
+    "fee": {
+      "title": "fee",
+      "allMileage": "allMileage",
+      "spendTime": "spendTime",
+      "average": "average speed",
+      "maxSpend": "max speed",
+      "expectedOil": "expected oil",
+      "with": "just run"
+    },
+    "login": {
+      "primary_login": "Login"
+    }
+  }
+}

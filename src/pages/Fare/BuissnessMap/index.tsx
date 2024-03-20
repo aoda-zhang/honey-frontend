@@ -1,10 +1,13 @@
 import React, { memo } from "react";
 import { Button, Form, Input, Select, Space } from "antd";
 import "dayjs/locale/zh-cn";
-import styles from "./index.module.scss";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+
 import globalStore from "@/shared/store/globalStore";
+
 import fareStore from "../store";
+
+import styles from "./index.module.scss";
 
 const BusinessMap: React.FC = () => {
   const { hospitals, setHospital } = globalStore();

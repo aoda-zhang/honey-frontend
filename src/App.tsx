@@ -1,7 +1,9 @@
 import React from "react";
+
 import "normalize.css";
-import routeList from "./router";
 import { useRoutes } from "react-router-dom";
+
+import routeList from "./router";
 
 const App: React.FC = () => {
   const router = useRoutes(routeList);

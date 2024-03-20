@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
-import BusinessMap from "./BuissnessMap";
-import PreviewMap from "./PreviewMap";
 import { Button, Form, message, Input, Spin } from "antd";
+
 import {
   AVE_OIL,
   MAX_AVE_SPEED,
@@ -10,18 +9,21 @@ import {
   NO_DATA_MESSAGE,
   PageStatus,
 } from "@/shared/constants";
+import globalStore from "@/shared/store/globalStore";
+import useOnPull from "@/shared/hooks/useOnPull";
+import useDoubleClick from "@/shared/hooks/useDoubleClick";
+
+import historyAPI from "../History/apis";
+
+import BusinessMap from "./BuissnessMap";
+import PreviewMap from "./PreviewMap";
 import { FormValue } from "./types";
 import styles from "./index.module.scss";
 import fareStore from "./store";
 import Info from "./Info";
 import fareAPI, { HospitalType } from "./apis";
-import historyAPI from "../History/apis";
-import globalStore from "@/shared/store/globalStore";
-import _ from "lodash";
-import useOnPull from "@/shared/hooks/useOnPull";
-import useDoubleClick from "@/shared/hooks/useDoubleClick";
 const Fare: FC = () => {
-  const { setHospital, hospitals } = globalStore();
+  const { setHospital } = globalStore();
   const { setForm, setDate, setCurrentDate, fareStatus, setFareStatus } =
     fareStore();
   const [isLoading, setLoading] = useState(false);
@@ -49,37 +51,36 @@ const Fare: FC = () => {
         setLoading(false);
       });
   }, [storeHospitals]);
-  const addHistory = (value: FormValue) => {
-    const fareHistory = value?.fareInfo?.map(item => ({
-      ...item,
-      from: item?.from?.[0],
-      to: item?.to?.[0],
-    }));
-
-    historyAPI
-      .addFareHistory({ spendDate: value?.spendDate, fareInfo: fareHistory })
-      .then(() => {
-        message.success(`${value?.spendDate}报销已保存`);
+  const addHistory = async (value: FormValue) => {
+    try {
+      const fareHistory = value?.fareInfo?.map(item => ({
+        ...item,
+        from: item?.from?.[0],
+        to: item?.to?.[0],
+      }));
+      await historyAPI.addFareHistory({
+        spendDate: value?.spendDate,
+        fareInfo: fareHistory,
       });
+      message.success(`${value?.spendDate}报销已保存`);
+    } catch (error) {
+      message.warning(`${value?.spendDate}报销未成功保存`);
+    }
   };
   useOnPull(fetchData);
   useDoubleClick(() => {
     setFareStatus({ isInfoOpen: true });
   });
 
-  const updateHospital = async (value: FormValue) => {
-    const hospitalInfo = value?.fareInfo
+  const updateHospitals = async (value: FormValue) => {
+    const fullHospitals = value?.fareInfo
       ?.map(item => [item?.from?.[0], item?.to?.[0]])
       ?.flat(Infinity);
-    const newHospitals = _.difference(
-      hospitalInfo,
-      hospitals?.map(item => item.value),
-    )?.map(item => ({ name: item }));
-    const AllHospitals = await fareAPI.updateHospital(newHospitals);
-    if (AllHospitals?.length > 0) {
-      storeHospitals(AllHospitals);
-      addHistory(value);
-      message.success("医院信息已更新");
+    const insertAccount = await fareAPI.addHospitals(fullHospitals);
+    message.success(`新增${insertAccount}条医院数据`);
+    addHistory(value);
+    if (insertAccount > 0) {
+      fetchData();
     }
   };
 
@@ -108,7 +109,7 @@ const Fare: FC = () => {
       (c, b) => +dayjs(b.startTime)?.valueOf() - +dayjs(c.startTime)?.valueOf(),
     );
     if (fareInfo?.length > 0) {
-      updateHospital(value);
+      updateHospitals(value);
       setForm(fareInfo);
       setDate(value?.spendDate);
       setCurrentDate(value?.spendDate);

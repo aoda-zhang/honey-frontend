@@ -1,13 +1,18 @@
 import React, { FC, useState } from "react";
 import { Button, Form, Input } from "antd";
-import lover from "@/shared/assets/images/glove.png";
-import style from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
-import { AuthFieldType } from "../types";
+import { useTranslation } from "react-i18next";
+
+import lover from "@/shared/assets/images/glove.png";
 import storage from "@/shared/utils/storage";
+
+import { AuthFieldType } from "../types";
 import authAPI from "../apis";
+
+import style from "./index.module.scss";
 const Login: FC = () => {
   const navigate = useNavigate();
+  const [t] = useTranslation();
   const [isLogin, setIsLogin] = useState(false);
   const onLogin = async (value: Omit<AuthFieldType, "phoneNumber">) => {
     setIsLogin(true);
@@ -57,7 +62,7 @@ const Login: FC = () => {
             htmlType="submit"
             className={style.submitBtn}
           >
-            登录
+            {t("login.primary_login")}
           </Button>
         </Form.Item>
       </Form>
@@ -69,7 +74,13 @@ const Login: FC = () => {
         >
           新用户注册
         </span>
-        <span>帮助</span>
+        <span
+          onClick={() => {
+            navigate("/setting");
+          }}
+        >
+          {t("common.setting")}
+        </span>
       </div>
     </div>
   );

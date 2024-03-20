@@ -1,0 +1,20 @@
+{
+  "translation": {
+    "common": {
+      "test": "test",
+      "setting": "设置"
+    },
+    "fee": {
+      "title": "费用",
+      "allMileage": "导航里程",
+      "spendTime": "驾驶时长",
+      "average": "平均速度",
+      "maxSpend": "最快速度",
+      "expectedOil": "预估油费",
+      "with": "一键跟走"
+    },
+    "login": {
+      "primary_login": "登录"
+    }
+  }
+}
