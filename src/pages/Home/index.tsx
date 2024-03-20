@@ -1,6 +1,7 @@
-import storage from "@/shared/utils/storage";
 import React, { FC, memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import storage from "@/shared/utils/storage";
 const Home: FC = () => {
   const navigate = useNavigate();
   useEffect(() => {

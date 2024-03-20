@@ -1,7 +1,10 @@
 import React, { FC, memo } from "react";
-import styles from "./index.module.scss";
+
 import carIcon from "@/shared/assets/images/car.png";
+
 import fareStore from "../store";
+
+import styles from "./index.module.scss";
 const PreviewMap: FC = () => {
   const { formData } = fareStore();
   const getSpendTime = (spendTime: number) => {

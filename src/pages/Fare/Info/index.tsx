@@ -1,8 +1,11 @@
 import { Drawer } from "antd";
 import React, { FC, memo } from "react";
-import fareStore from "../store";
-import styles from "./index.module.scss";
+
 import envConfig from "@/config/env";
+
+import fareStore from "../store";
+
+import styles from "./index.module.scss";
 
 type Props = {
   isOpen: boolean;

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import { FareInfo, FareProcessStatus, FareProcessStatusItem } from "../types";
 interface FareState {
   faredData: FareInfo[];
