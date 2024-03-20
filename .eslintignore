@@ -4,5 +4,6 @@ setupProxy.js
 .stylelintrc.js
 config/
 src/route/*
+src/i18n/*
 src/shared/libs/*
 craco.config.js

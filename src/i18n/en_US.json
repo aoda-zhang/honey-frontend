@@ -1,0 +1,14 @@
+{
+  "translation": {
+    "common": {
+      "test": "test",
+      "setting": "setting"
+    },
+    "fee": {
+      "title": "费用"
+    },
+    "login": {
+      "primary_login": "Login"
+    }
+  }
+}

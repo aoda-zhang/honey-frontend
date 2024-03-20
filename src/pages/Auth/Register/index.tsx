@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import { Button, Form, Input } from "antd";
-import register from "@/shared/assets/images/register.png";
-import style from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
+
+import register from "@/shared/assets/images/register.png";
+import storage from "@/shared/utils/storage";
+
 import { AuthFieldType } from "../types";
 import authAPI from "../apis";
-import storage from "@/shared/utils/storage";
+
+import style from "./index.module.scss";
 
 const Register: FC = () => {
   const navigate = useNavigate();

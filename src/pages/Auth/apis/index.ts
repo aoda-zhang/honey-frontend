@@ -1,4 +1,5 @@
 import httpService from "@/shared/libs/http";
+
 import { AuthFieldType, LoginInfo } from "../types";
 class AuthAPI {
   register = (userInfo: AuthFieldType) => {
