@@ -1,5 +1,4 @@
 import React from "react";
-
 import "normalize.css";
 import { useRoutes } from "react-router-dom";
 

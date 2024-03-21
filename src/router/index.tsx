@@ -11,7 +11,6 @@ import Setting from "@/pages/Setting";
 const routerList: RouteObject[] = [
   {
     path: "/",
-    index: true,
     element: <Home />,
   },
   {
