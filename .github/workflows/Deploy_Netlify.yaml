@@ -1,8 +1,8 @@
-name: Deploy to Vercel(NO PROD)
+name: Deploy to Netlify
 
 on:
   push:
-    branches: develop
+    branches: master
     paths-ignore:
       - "**/.github/**"
       - "**/*.txt"
@@ -12,16 +12,13 @@ on:
         description: "The environment to deploy"
         required: true
         type: choice
-        options: [dev, test]
+        options: [dev, prod]
         default: dev
 permissions:
   security-events: write
   actions: read
   contents: read
-
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_USER_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  issues: write
 
 jobs:
   CodeScan:
@@ -31,11 +28,13 @@ jobs:
 
   Build_Deploy:
     needs: CodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_vercel.yaml@master
+    uses: aoda-zhang/shared-devops/.github/workflows/deploy_netlify.yaml@master
     with:
       app_repository: ${{ github.repository }}
       config_folder: honey-frontEnd
       currentEnv: ${{ inputs.environment }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
