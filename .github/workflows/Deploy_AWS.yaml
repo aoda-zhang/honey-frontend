@@ -1,49 +1,49 @@
-name: Deploy to AWS S3 (NO PROD)
+# name: Deploy to AWS S3 (NO PROD)
 
-on:
-  push:
-    branches: develop
-    paths-ignore:
-      - "**/.github/**"
-      - "**/*.txt"
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "The environment to deploy"
-        required: true
-        type: choice
-        options: [dev, test]
-        default: dev
-permissions:
-  security-events: write
-  actions: read
-  contents: read
+# on:
+#   push:
+#     branches: develop
+#     paths-ignore:
+#       - "**/.github/**"
+#       - "**/*.txt"
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: "The environment to deploy"
+#         required: true
+#         type: choice
+#         options: [dev, test]
+#         default: dev
+# permissions:
+#   security-events: write
+#   actions: read
+#   contents: read
 
-jobs:
-  CodeScan:
-    uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
-    with:
-      app_repository: ${{ github.repository }}
-    secrets: inherit
+# jobs:
+#   CodeScan:
+#     uses: aoda-zhang/shared-devops/.github/workflows/code_scan.yaml@master
+#     with:
+#       app_repository: ${{ github.repository }}
+#     secrets: inherit
 
-  Build:
-    needs: CodeScan
-    uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
-    with:
-      app_repository: ${{ github.repository }}
-      config_folder: honey-frontEnd
-      currentEnv: ${{ inputs.environment }}
-      build_name: build-artifacts
-    secrets:
-      PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
+#   Build:
+#     needs: CodeScan
+#     uses: aoda-zhang/shared-devops/.github/workflows/shared_build.yaml@master
+#     with:
+#       app_repository: ${{ github.repository }}
+#       config_folder: honey-frontEnd
+#       currentEnv: ${{ inputs.environment }}
+#       build_name: build-artifacts
+#     secrets:
+#       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
 
-  Deploy:
-    needs: Build
-    uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
-    with:
-      build_name: build-artifacts
-      app_repository: ${{ github.repository }}
-    secrets:
-      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-      AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#   Deploy:
+#     needs: Build
+#     uses: aoda-zhang/shared-devops/.github/workflows/deploy_aws_s3.yaml@master
+#     with:
+#       build_name: build-artifacts
+#       app_repository: ${{ github.repository }}
+#     secrets:
+#       AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+#       AWS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+#       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
