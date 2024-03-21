@@ -12,7 +12,7 @@ import authAPI from "../apis";
 import style from "./index.module.scss";
 const Login: FC = () => {
   const navigate = useNavigate();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(false);
   const onLogin = async (value: Omit<AuthFieldType, "phoneNumber">) => {
     setIsLogin(true);
@@ -72,7 +72,7 @@ const Login: FC = () => {
             navigate("/register");
           }}
         >
-          新用户注册
+          {t("login.newUser")}
         </span>
         <span
           onClick={() => {

@@ -14,7 +14,8 @@
       "with": "just run"
     },
     "login": {
-      "primary_login": "Login"
+      "primary_login": "Login",
+      "newUser": "register"
     }
   }
 }

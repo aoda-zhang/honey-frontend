@@ -14,7 +14,8 @@
       "with": "一键跟走"
     },
     "login": {
-      "primary_login": "登录"
+      "primary_login": "登录",
+      "newUser": "新用户注册"
     }
   }
 }
