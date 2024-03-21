@@ -35,6 +35,5 @@ jobs:
       currentEnv: ${{ inputs.environment }}
     secrets:
       PAT: ${{ secrets.CONFIG_ACCESS_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
