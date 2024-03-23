@@ -5,5 +5,6 @@ const productionEnv = {
   welcomeMessage: "Welcome to our reimbursement system",
   colorPrimary: "#1c7d29",
   oilPrice: environment?.REACT_APP_OIL_PRICE,
+  privateKey: environment?.REACT_APP_PRIVATE_KEY,
 };
 export default productionEnv;
