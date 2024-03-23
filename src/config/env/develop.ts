@@ -4,5 +4,6 @@ const developEnv = {
   commonErrorMessage: "出错了，快去找齐琪哥修bug！！！！",
   colorPrimary: "#1c7d29",
   oilPrice: environment?.REACT_APP_OIL_PRICE,
+  privateKey: environment?.REACT_APP_PRIVATE_KEY,
 };
 export default developEnv;

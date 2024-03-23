@@ -11,4 +11,5 @@ export enum commonHeader {
 export enum HttpBusinessMappingCode {
   // jwt 过期
   jwtexpired = "E4001",
+  "unauthorized" = "Unauthorized",
 }

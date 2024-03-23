@@ -20,7 +20,10 @@ const jwtExpiredHandle = async () => {
 const httpErrorHandler = async error => {
   switch (error?.status ?? error?.statusCode) {
     case 401:
-      if (error?.data === HttpBusinessMappingCode.jwtexpired) {
+      if (
+        error?.data === HttpBusinessMappingCode.jwtexpired ||
+        error?.message === HttpBusinessMappingCode.unauthorized
+      ) {
         jwtExpiredHandle();
       }
       break;

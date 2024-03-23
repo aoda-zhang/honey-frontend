@@ -66,7 +66,7 @@ const Login: FC = () => {
           </Button>
         </Form.Item>
       </Form>
-      <div className={style.help}>
+      {/* <div className={style.help}>
         <span
           onClick={() => {
             navigate("/register");
@@ -81,7 +81,7 @@ const Login: FC = () => {
         >
           {t("common.setting")}
         </span>
-      </div>
+      </div> */}
     </div>
   );
 };

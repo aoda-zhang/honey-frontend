@@ -7,6 +7,7 @@ interface EnvType {
   commonErrorMessage: string;
   colorPrimary: string;
   oilPrice: string;
+  privateKey: string;
 }
 const getEnvFiles = (): EnvType => {
   switch (currentEnv) {
