@@ -119,4 +119,5 @@ dist
 .DS_Store
 
 tsconfig.tsbuildinfo
-src/config/env/*
+src/config/env/develop.ts
+src/config/env/production.ts
