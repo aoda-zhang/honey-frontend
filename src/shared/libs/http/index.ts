@@ -10,7 +10,7 @@ import httpErrorHandler from "./errorHandle";
 import { generateHMAC, getCryptUTCTimestamp, getUTCTimestamp } from "./encrypt";
 const Http = axios.create({
   timeout: 20000,
-  baseURL: envConfig.baseURL,
+  baseURL: envConfig?.baseURL,
 });
 // 自定义请求头 函数式调用可及时更新local获取的参数
 const getHttpHeaders = (data: string) => {
