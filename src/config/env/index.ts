@@ -1,18 +1,15 @@
-import devEnv from "./dev";
-import prdEnv from "./prd";
-import testEnv from "./test";
+import developEnv from "./dev";
+import productionEnv from "./prd";
 const environment = import.meta.env;
 const currentEnv = environment?.MODE ?? "develop";
 const getEnvFiles = (): Record<string, any> => {
   switch (currentEnv) {
     case "develop":
-      return devEnv;
-    case "test":
-      return testEnv;
+      return developEnv;
     case "production":
-      return prdEnv;
+      return productionEnv;
     default:
-      return devEnv;
+      return developEnv;
   }
 };
 export default getEnvFiles();

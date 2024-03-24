@@ -60,7 +60,10 @@ const Info: FC<Props> = props => {
       <div>
         <p className={styles.title}>预估报销总油费</p>
         <p className={styles.values}>
-          {(getCurrentTotalMileage() * Number(envConfig?.oilPrice)).toFixed(2)}
+          {(
+            getCurrentTotalMileage() *
+            Number(envConfig?.systemSettings?.oilPrice)
+          ).toFixed(2)}
         </p>
       </div>
     </Drawer>

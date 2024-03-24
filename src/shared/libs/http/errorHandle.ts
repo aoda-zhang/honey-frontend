@@ -5,14 +5,16 @@ import authAPI from "@/pages/Auth/apis";
 import envConfig from "@/config/env";
 const jwtExpiredHandle = async () => {
   try {
-    const newToken = await authAPI.refreshToken({
+    const newAuthToken = await authAPI.refreshToken({
       refreshToken: storage.get(commonHeader.refreshToken),
     });
 
-    await storage.set(commonHeader["access-token"], newToken?.accessToken);
-    await storage.set(commonHeader.refreshToken, newToken?.refreshToken);
+    await storage.set(commonHeader["access-token"], newAuthToken?.accessToken);
+    await storage.set(commonHeader.refreshToken, newAuthToken?.refreshToken);
   } catch (error) {
     message.error("登陆过期，请重新登录！");
+    await storage.remove(commonHeader["access-token"]);
+    await storage.remove(commonHeader.refreshToken);
     window.location.href = "/login";
   }
 };
@@ -24,6 +26,7 @@ const httpErrorHandler = async error => {
         error?.data === HttpBusinessMappingCode.jwtexpired ||
         error?.message === HttpBusinessMappingCode.unauthorized
       ) {
+        message.error(error?.message);
         jwtExpiredHandle();
       }
       break;

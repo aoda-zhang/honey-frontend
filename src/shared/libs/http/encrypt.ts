@@ -8,12 +8,14 @@ export type HMACParams = {
   timestamp: number;
 };
 export const getCryptUTCTimestamp = timestamp => {
-  console.log("env", envConfig);
-
-  return CryptoJS.AES.encrypt(
-    CryptoJS.enc.Utf8.parse(`${timestamp}`),
-    envConfig?.auth?.privateKey,
-  );
+  try {
+    return CryptoJS.AES.encrypt(
+      CryptoJS.enc.Utf8.parse(`${timestamp}`),
+      envConfig?.privateKey,
+    );
+  } catch (error) {
+    console.error(`${error}`);
+  }
 };
 export const getUTCTimestamp = () => {
   return Math.floor(dayjs.utc().valueOf() / 1000);

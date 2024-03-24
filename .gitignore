@@ -119,5 +119,3 @@ dist
 .DS_Store
 
 tsconfig.tsbuildinfo
-src/config/env/*
-!src/config/env/index.ts
