@@ -11,7 +11,7 @@ export const getCryptUTCTimestamp = timestamp => {
   try {
     return CryptoJS.AES.encrypt(
       CryptoJS.enc.Utf8.parse(`${timestamp}`),
-      envConfig?.privateKey,
+      envConfig?.auth?.privateKey,
     );
   } catch (error) {
     console.error(`${error}`);
