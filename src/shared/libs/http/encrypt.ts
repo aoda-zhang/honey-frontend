@@ -8,6 +8,9 @@ export type HMACParams = {
   timestamp: number;
 };
 export const getCryptUTCTimestamp = timestamp => {
+  console.log("timestamp,", CryptoJS.enc.Utf8.parse(`${timestamp}`));
+  console.log("privateKey,", envConfig?.privateKey);
+
   try {
     return CryptoJS.AES.encrypt(
       CryptoJS.enc.Utf8.parse(`${timestamp}`),
