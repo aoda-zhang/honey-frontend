@@ -15,9 +15,8 @@ export const getUTCTimestamp = () => {
 };
 export const generateHMAC = ({ data, timestamp }: HMACParams): string => {
   const bodyString = data ? JSON.stringify(data) : "";
-  const hmac = CryptoJS.HmacSHA256(
+  return CryptoJS.HmacSHA256(
     `${bodyString}+${timestamp}`,
     envConfig?.privateKey,
-  );
-  return CryptoJS.enc.Hex.stringify(hmac);
+  ).toString(CryptoJS.enc.Hex);
 };

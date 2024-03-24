@@ -48,8 +48,7 @@ const interceptorsResSuccess = (response: AxiosResponse<HttpResponseType>) => {
     response?.data?.status < 400 &&
     response?.data?.isSuccess
   ) {
-    const responseData = response?.data?.data;
-    return Promise.resolve(responseData);
+    return Promise.resolve(response?.data?.data);
   } else {
     httpErrorHandler(response?.data);
     return Promise.reject();
