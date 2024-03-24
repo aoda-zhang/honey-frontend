@@ -2,14 +2,7 @@ import developEnv from "./develop";
 import productionEnv from "./production";
 const environment = import.meta.env;
 const currentEnv = environment?.MODE ?? "develop";
-interface EnvType {
-  baseURL: string;
-  commonErrorMessage: string;
-  colorPrimary: string;
-  oilPrice: string;
-  privateKey: string;
-}
-const getEnvFiles = (): EnvType => {
+const getEnvFiles = (): Record<string, any> => {
   switch (currentEnv) {
     case "develop":
       return developEnv;

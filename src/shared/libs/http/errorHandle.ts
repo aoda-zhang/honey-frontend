@@ -28,11 +28,13 @@ const httpErrorHandler = async error => {
       }
       break;
     case 500:
-      message.error(`${envConfig?.commonErrorMessage}`);
+      message.error(`${envConfig?.systemSettings?.commonErrorMessage}`);
       break;
     default:
       message.error(
-        error?.message ? error?.message : `${envConfig?.commonErrorMessage}`,
+        error?.message
+          ? error?.message
+          : `${envConfig?.systemSettings?.commonErrorMessage}`,
       );
   }
 };

@@ -9,7 +9,7 @@ import envConfig from "./config/env";
 import "./i18n";
 const theme = {
   token: {
-    colorPrimary: envConfig?.colorPrimary,
+    colorPrimary: envConfig?.systemSettings?.colorPrimary,
   },
 };
 const container = document.getElementById("root");

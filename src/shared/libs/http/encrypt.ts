@@ -8,29 +8,18 @@ export type HMACParams = {
   timestamp: number;
 };
 export const getCryptUTCTimestamp = timestamp => {
-  console.log("timestamp,", CryptoJS.enc.Utf8.parse(`${timestamp}`));
-  console.log("envConfig,", envConfig);
-
-  try {
-    return CryptoJS.AES.encrypt(
-      CryptoJS.enc.Utf8.parse(`${timestamp}`),
-      envConfig?.privateKey,
-    );
-  } catch (error) {
-    console.error(`${error}`);
-  }
+  return CryptoJS.AES.encrypt(
+    CryptoJS.enc.Utf8.parse(`${timestamp}`),
+    envConfig?.auth?.privateKey,
+  );
 };
 export const getUTCTimestamp = () => {
   return Math.floor(dayjs.utc().valueOf() / 1000);
 };
 export const generateHMAC = ({ data, timestamp }: HMACParams): string => {
-  try {
-    const bodyString = data ? JSON.stringify(data) : "";
-    return CryptoJS.HmacSHA256(
-      `${bodyString}+${timestamp}`,
-      envConfig?.privateKey,
-    ).toString(CryptoJS.enc.Hex);
-  } catch (error) {
-    console.error(`${error}`);
-  }
+  const bodyString = data ? JSON.stringify(data) : "";
+  return CryptoJS.HmacSHA256(
+    `${bodyString}+${timestamp}`,
+    envConfig?.auth?.privateKey,
+  ).toString(CryptoJS.enc.Hex);
 };
